@@ -1,0 +1,40 @@
+{
+  "name": "echo_cbt_server",
+  "version": "1.0.0",
+  "description": "Backend server for the Echo CBT app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon -r dotenv/config app.js",
+    "lint": "eslint ."
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarthakpranesh/Echo_CBT_Server.git"
+  },
+  "keywords": [
+    "Echo",
+    "CBT"
+  ],
+  "author": "Sarthak Pranesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarthakpranesh/Echo_CBT_Server/issues"
+  },
+  "homepage": "https://github.com/sarthakpranesh/Echo_CBT_Server#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.20"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "eslint": "^7.3.1",
+    "pre-commit": "^1.2.2"
+  }
+}
