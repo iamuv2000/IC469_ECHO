@@ -11,6 +11,6 @@ module.exports = {
     return console.error(chalk.bgRed.black('Error') + ' : ' + chalk.red(message))
   },
   request: (message) => {
-    return console.client(chalk.bgYellow.black('Client' + ' : ' + chalk.yellow(message)))
+    return console.log(chalk.bgYellow.black('Client') + ' : ' + chalk.yellow(message))
   }
 }
