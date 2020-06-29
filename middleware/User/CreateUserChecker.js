@@ -1,4 +1,4 @@
-const responses = require('../configs/responses.js')
+const responses = require('../../configs/responses.js')
 
 const CreateUserChecker = (req, res, next) => {
   const allGood = req.body.displayName &&

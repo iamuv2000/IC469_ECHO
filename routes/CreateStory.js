@@ -1,6 +1,6 @@
 const route = require('express')()
-const CreateStoryChecker = require('../../middleware/user/CreateStoryChecker.js')
-const CreateStoryHandler = require('../../controllers/User/CreateStoryHandler.js')
+const CreateStoryChecker = require('../middleware/Story/CreateStoryChecker.js')
+const CreateStoryHandler = require('../controllers/Story/CreateStoryHandler.js')
 
 route.post('/user/create_story', CreateStoryChecker, (req, res) => {
   CreateStoryHandler(req.uid, req.story)
