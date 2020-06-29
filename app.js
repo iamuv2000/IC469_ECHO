@@ -23,6 +23,8 @@ app.use(GlobalUserIdentifier)
 app.use(CreateStory)
 app.use(GetStories)
 
-app.listen(8080, () => {
+const PORT = process.env.PORT
+
+app.listen(PORT, () => {
   logger.server('Server listening: 8080')
 })
