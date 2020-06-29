@@ -1,7 +1,8 @@
 const GlobalUserIdentifier = (req, res, next) => {
-  if (req.query.uid) {
-    if (req.query.uid.length > 0) {
-      req.uid = req.query.uid
+  const allGood = req.headers.authorization
+  if (allGood) {
+    if (req.headers.authorization.length > 0) {
+      req.uid = req.headers.authorization.replace('Bearer ', '')
       return next()
     }
   }
