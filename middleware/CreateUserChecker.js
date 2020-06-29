@@ -1,3 +1,5 @@
+const responses = require('../configs/responses.js')
+
 const CreateUserChecker = (req, res, next) => {
   const allGood = req.body.displayName &&
   req.body.email &&
@@ -14,7 +16,7 @@ const CreateUserChecker = (req, res, next) => {
   }
   res.status(400).send({
     statusCode: 400,
-    serverMessage: 'Bad request from client',
+    serverMessage: responses['400'],
     payload: {},
     error: null
   })

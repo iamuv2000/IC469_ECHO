@@ -13,6 +13,10 @@ const CreateStory = require('./routes/User/CreateStory.js')
 // Using imported middleware and routes
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use((req, res, next) => {
+  logger.request('New Request')
+  next()
+})
 app.use(CreateRoute)
 app.use(GlobalUserIdentifier)
 app.use(CreateStory)

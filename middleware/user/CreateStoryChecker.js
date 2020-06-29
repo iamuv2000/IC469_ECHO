@@ -1,3 +1,5 @@
+const responses = require('../../configs/responses.js')
+
 const CreateStoryChecker = (req, res, next) => {
   const allGood = req.body.story
   if (allGood) {
@@ -9,7 +11,7 @@ const CreateStoryChecker = (req, res, next) => {
   }
   res.status(400).send({
     statusCode: 400,
-    serverMessage: 'Bad request',
+    serverMessage: responses['400'],
     payload: {},
     error: null
   })

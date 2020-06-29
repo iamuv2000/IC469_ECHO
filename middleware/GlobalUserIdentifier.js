@@ -1,3 +1,5 @@
+const responses = require('../configs/responses.js')
+
 const GlobalUserIdentifier = (req, res, next) => {
   const allGood = req.headers.authorization
   if (allGood) {
@@ -7,8 +9,8 @@ const GlobalUserIdentifier = (req, res, next) => {
     }
   }
   res.status(400).send({
-    statusCode: 400,
-    serverMessage: 'Unauthorized',
+    statusCode: 401,
+    serverMessage: responses['401'],
     payload: {},
     error: null
   })
