@@ -9,6 +9,6 @@ mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0-jo8kv.mongo
     useUnifiedTopology: true
   })
   .then(() => logger.success('Mongo Database Connected'))
-  .catch(() => logger.error('Error connecting to Mongo Database!!!'))
+  .catch((err) => logger.error(err.message))
 
 module.export = mongoose

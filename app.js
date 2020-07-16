@@ -7,7 +7,7 @@ require('./configs/mongobd/mongodb-config')
 const GlobalUserIdentifier = require('./middleware/GlobalUserIdentifier.js')
 
 // importing routes
-const CreateRoute = require('./routes/CreateRoute.js')
+const CreateRoute = require('./routes/user/CreateRoute.js')
 const CreateStory = require('./routes/CreateStory.js')
 const GetStories = require('./routes/GetStories.js')
 
