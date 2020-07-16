@@ -11,6 +11,7 @@ const CreateRoute = require('./routes/user/CreateRoute.js')
 const GetUser = require('./routes/user/GetUser.js')
 const CreateStory = require('./routes/CreateStory.js')
 const GetStories = require('./routes/GetStories.js')
+const GetReply = require('./routes/bot/GetReply.js')
 
 // Using imported middleware and routes
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -24,6 +25,7 @@ app.use(GlobalUserIdentifier)
 app.use(GetUser)
 app.use(CreateStory)
 app.use(GetStories)
+app.use(GetReply)
 
 const PORT = process.env.PORT
 
