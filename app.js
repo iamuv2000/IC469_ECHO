@@ -8,6 +8,7 @@ const GlobalUserIdentifier = require('./middleware/GlobalUserIdentifier.js')
 
 // importing routes
 const CreateRoute = require('./routes/user/CreateRoute.js')
+const GetUser = require('./routes/user/GetUser.js')
 const CreateStory = require('./routes/CreateStory.js')
 const GetStories = require('./routes/GetStories.js')
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 })
 app.use(CreateRoute)
 app.use(GlobalUserIdentifier)
+app.use(GetUser)
 app.use(CreateStory)
 app.use(GetStories)
 
