@@ -19,7 +19,7 @@ Depression is a common illness worldwide with more than 264 million effected. Su
 | Heroku Server | https://echo-cbt-server.herokuapp.com/    |
 
 ## Postman
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/1908c0545ba68ffaea89#?env%5BechoParallax%5D=W3sia2V5IjoibG9jYWwiLCJ2YWx1ZSI6ImxvY2Fob3N0OjgwODAiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InVybCIsInZhbHVlIjoiaHR0cHM6Ly9lY2hvLWdmYXMuaGVyb2t1YXBwLmNvbSIsImVuYWJsZWQiOnRydWV9XQ==)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/7649159/T1DmDe9H)
 
 ## Having Issues
 This project uses [GitHub Issues](https://github.com/sarthakpranesh/Echo_CBT_Server/issues) for tracking bugs and feature requests, so feel free to open one if you find any :)
