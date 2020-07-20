@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<minder version="1.9.1">
+  <theme name="default" label="Default" index="4"/>
+  <styles>
+    <style level="0" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="rounded" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="1" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="2" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="3" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="4" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="5" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="6" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="7" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="8" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="9" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+    <style level="10" isset="false" linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true" connectiondash="dotted" connectionwidth="2" connectionarrow="fromto" connectionpadding="3" connectionfont="Sans 10"/>
+  </styles>
+  <drawarea x="87.631578950211406" y="-253.15789473615587" scale="1"/>
+  <images/>
+  <nodes>
+    <node id="1" posx="372.94636294431984" posy="429.67716658674181" maxwidth="200" width="141" height="46" side="left" fold="false" treesize="874" layout="Horizontal">
+      <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+      <formatting/>
+      <nodename>Activity Tracker</nodename>
+      <nodenote>All Users will have an Activity Tracker instance in data</nodenote>
+      <nodes>
+        <node id="3" posx="613.94636294431984" posy="15.677166586741805" maxwidth="200" width="70" height="46" side="right" fold="false" treesize="46" color="#f37329" colorroot="false" layout="Horizontal">
+          <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+          <formatting/>
+          <nodename>UID</nodename>
+          <nodenote>FIrebase UID</nodenote>
+        </node>
+        <node id="4" posx="613.94636294431984" posy="61.677166586741805" maxwidth="200" width="95" height="46" side="right" fold="false" treesize="46" color="#f9c440" colorroot="false" layout="Horizontal">
+          <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+          <formatting/>
+          <nodename>enteries</nodename>
+          <nodenote>The total number of days the entry was recorded on</nodenote>
+        </node>
+        <node id="5" posx="613.94636294431984" posy="452.67716658674181" maxwidth="200" width="92" height="46" side="right" fold="false" treesize="736" color="#68b723" colorroot="false" layout="Horizontal">
+          <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+          <formatting/>
+          <nodename>records</nodename>
+          <nodenote>This node will have the actual records that the user gives.
+
+Hence it will be an array of records.</nodenote>
+          <nodes>
+            <node id="6" posx="805.94636294431984" posy="107.67716658674181" maxwidth="200" width="70" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>feeling</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="7" posx="805.94636294431984" posy="153.67716658674181" maxwidth="200" width="74" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>jogging</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="8" posx="805.94636294431984" posy="199.67716658674181" maxwidth="200" width="81" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>exercise</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="9" posx="805.94636294431984" posy="245.67716658674181" maxwidth="200" width="83" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>meditate</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="10" posx="805.94636294431984" posy="291.67716658674181" maxwidth="200" width="59" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>paint</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="11" posx="805.94636294431984" posy="337.67716658674181" maxwidth="200" width="57" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>read</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="13" posx="805.94636294431984" posy="383.67716658674181" maxwidth="200" width="59" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>code</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="14" posx="805.94636294431984" posy="429.67716658674181" maxwidth="200" width="71" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>games</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="15" posx="805.94636294431984" posy="475.67716658674181" maxwidth="200" width="82" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>socialise</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="16" posx="805.94636294431984" posy="521.67716658674181" maxwidth="200" width="103" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>socialMedia</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="17" posx="805.94636294431984" posy="567.67716658674181" maxwidth="200" width="97" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>goodSleep</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="18" posx="805.94636294431984" posy="613.67716658674181" maxwidth="200" width="89" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>badSleep</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="19" posx="805.94636294431984" posy="659.67716658674181" maxwidth="200" width="126" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>moderateSleep</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="20" posx="805.94636294431984" posy="705.67716658674181" maxwidth="200" width="65" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>netflix</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="21" posx="805.94636294431984" posy="751.67716658674181" maxwidth="200" width="70" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>smoke</nodename>
+              <nodenote></nodenote>
+            </node>
+            <node id="22" posx="805.94636294431984" posy="797.67716658674181" maxwidth="200" width="87" height="46" side="right" fold="false" treesize="46" color="#68b723" colorroot="false" layout="Horizontal">
+              <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+              <formatting/>
+              <nodename>junkFood</nodename>
+              <nodenote></nodenote>
+            </node>
+          </nodes>
+        </node>
+        <node id="23" posx="613.94636294431984" posy="843.67716658674181" maxwidth="200" width="78" height="46" side="right" fold="false" treesize="46" color="#3689e6" colorroot="false" layout="Horizontal">
+          <style linktype="straight" linkwidth="4" linkarrow="false" linkdash="solid" nodeborder="underlined" nodewidth="200" nodeborderwidth="4" nodefill="false" nodemargin="8" nodepadding="6" nodefont="Sans 11" nodemarkup="true"/>
+          <formatting/>
+          <nodename>types</nodename>
+          <nodenote>will be an array containing all the types that each record will have in the records array</nodenote>
+        </node>
+      </nodes>
+    </node>
+  </nodes>
+</minder>

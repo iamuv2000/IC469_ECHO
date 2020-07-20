@@ -2,12 +2,14 @@
 const responses = require('../../configs/responses.js')
 const User = require('../../models/User.js')
 const Bot = require('../../models/Bot.js')
+const Activity = require('../../models/Activity.js')
 
 const CreateUserHandler = (user) => {
   return new Promise((resolve, reject) => {
     const UserDoc = new User(user)
     const BotDoc = new Bot({ uid: user.uid })
-    Promise.all([UserDoc.save(), BotDoc.save()])
+    const ActivityDoc = new Activity({ uid: user.uid })
+    Promise.all([UserDoc.save(), BotDoc.save(), ActivityDoc.save()])
       .then(() => {
         resolve({
           statusCode: 201,
