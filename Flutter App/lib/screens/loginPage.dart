@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:device_apps/device_apps.dart';
-// import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:parallax/scoped_models/shared.dart';
+import 'package:toast/toast.dart';
 
-import 'package:parallax/models/user.dart';
-import 'package:parallax/scoped_models/mainModel.dart';
-import 'package:parallax/screens/homePage.dart';
-import 'package:parallax/screens/dialogFlow.dart';
+import '../models/user.dart';
+import '../scoped_models/mainModel.dart';
+import '../scoped_models/shared.dart';
+import 'homePage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,7 +16,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -50,19 +48,47 @@ class _LoginPageState extends State<LoginPage> {
     // print('Registered User: $user');
     print('UID:');
     print(user.uid);
-    if(user!=null && user.uid!=null)
-     {
-       var user1=User.fromJson({
-         "uid": user.uid,
-         "name": user.displayName,
-         "email": user.email
-       });
+    if (user != null && user.uid != null) {
+      var user1 = User.fromJson(
+          {"uid": user.uid, "name": user.displayName, "email": user.email});
       //  model.logIn(user.uid, "Someone2");
-      model.logIn(user1);
-     }
+      var mssg;
+      try {
+        var mssg = await model.register(user1);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return HomePage();
+            },
+          ),
+        );
+        Toast.show("Logged In!", context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      } catch (err) {
+        print("$err");
+        if (err == "User already registered, try signing in!") {
+          try {
+            await model.logIn(user1.uid);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return HomePage();
+                },
+              ),
+            );
+          } catch(err) {
+          Toast.show("Login Error!", context,
+              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          }
+        } else {
+          Toast.show("Login Error!", context,
+              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+        }
+      }
+    }
     List<Application> apps = await DeviceApps.getInstalledApplications();
     print(apps);
-    // //var resp=await 
+    // //var resp=await
     // var resp=await _setUpListener(user.uid);
     // //var a=json.decode(user);
     // //print('JSON Decoded $a');
@@ -83,10 +109,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model){
+      builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
-        body: Container(
-          color: Colors.white,
+          body: Container(
+            color: Colors.white,
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -100,8 +126,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         );
-      }
-          // child: ,
+      },
     );
   }
 
@@ -109,20 +134,8 @@ class _LoginPageState extends State<LoginPage> {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
-      signInWithGoogle(model).whenComplete(() {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) {
-            // return FirstScreen(name, email, uid);
-            // return MyHomePage(title: "Something",);
-            // return MessageList();
-            return HomePage();
-            // return HomePageDialogflow();
-          },
-        ),
-      );
-    });
-  },
+        signInWithGoogle(model);
+      },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.grey),
