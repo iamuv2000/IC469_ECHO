@@ -33,6 +33,58 @@ class _HomePageState extends State<HomePage> {
 
   int pageNumber = 1, _moodIndex = -1;
 
+  List<String> activities = [], activityKeys = [];
+  List<int> timeSpent = [];
+
+  void updateActivites(String newActivity) {
+    print("Adding: $newActivity");
+    var activityKey = "";
+    if(newActivity == "Jogging") {
+      activityKey = "jogging";
+    } else if(newActivity == "Exercise") {
+      activityKey = "exercise";
+    } else if(newActivity == "Meditate") {
+      activityKey = "meditate";
+    } else if(newActivity == "Paint") {
+      activityKey = "paint";
+    } else if(newActivity == "Read") {
+      activityKey = "read";
+    } else if(newActivity == "Code") {
+      activityKey = "code";
+    } else if(newActivity == "Video Games") {
+      activityKey = "games";
+    } else if(newActivity == "Socialize") {
+      activityKey = "socialize";
+    } else if(newActivity == "Social Media") {
+      activityKey = "socialMedia";
+    } else if(newActivity == "Good Sleep") {
+      activityKey = "goodSleep";
+    } else if(newActivity == "Moderate Sleep") {
+      activityKey = "moderateSleep";
+    } else if(newActivity == "Bad Sleep") {
+      activityKey = "badSleep";
+    } else if(newActivity == "Streaming Platforms") {
+      activityKey = "netflix";
+    } else if(newActivity == "Smoking") {
+      activityKey = "smoke";
+    } else if(newActivity == "Junk Food") {
+      activityKey = "junkFood";
+    }
+    setState(() {
+      activities.add(newActivity);
+      activityKeys.add(activityKey);
+      timeSpent.add(0);
+    });
+    Navigator.pop(context);
+    _modalBottomSheetMenu();
+  }
+
+  void updateTimeSpent(int index, hours) {
+    setState(() {
+      timeSpent[index] = hours;
+    });
+  }
+
   void showFoatingActionButton(bool value) {
     setState(() {
       showFab = value;
@@ -93,7 +145,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: _moodIndex == 0 ? Colors.lightBlue : Colors.transparent,
+                              backgroundColor: _moodIndex == 0
+                                  ? Colors.lightBlue
+                                  : Colors.transparent,
                               maxRadius: 27,
                               backgroundImage:
                                   AssetImage("images/awesome_icon.png"),
@@ -119,7 +173,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: _moodIndex == 1 ? Colors.lightBlue : Colors.transparent,
+                              backgroundColor: _moodIndex == 1
+                                  ? Colors.lightBlue
+                                  : Colors.transparent,
                               maxRadius: 27,
                               backgroundImage:
                                   AssetImage("images/good_icon.png"),
@@ -145,7 +201,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: _moodIndex == 2 ? Colors.lightBlue : Colors.transparent,
+                              backgroundColor: _moodIndex == 2
+                                  ? Colors.lightBlue
+                                  : Colors.transparent,
                               maxRadius: 27,
                               backgroundImage:
                                   AssetImage("images/meh_icon.png"),
@@ -171,7 +229,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: _moodIndex == 3 ? Colors.lightBlue : Colors.transparent,
+                              backgroundColor: _moodIndex == 3
+                                  ? Colors.lightBlue
+                                  : Colors.transparent,
                               maxRadius: 27,
                               backgroundImage:
                                   AssetImage("images/bad_icon.png"),
@@ -197,7 +257,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: _moodIndex == 4 ? Colors.lightBlue : Colors.transparent,
+                              backgroundColor: _moodIndex == 4
+                                  ? Colors.lightBlue
+                                  : Colors.transparent,
                               maxRadius: 27,
                               backgroundImage:
                                   AssetImage("images/awful_icon.png"),
@@ -280,14 +342,35 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SecondPageRow(
-                    title: "Self-care",
-                    chipTitles: ["Jogging", "Exercise", "Meditate"]),
+                  title: "Self-care",
+                  chipTitles: ["Jogging", "Exercise", "Meditate"],
+                  activities: activities,
+                  updateActivites: updateActivites,
+                ),
                 SecondPageRow(
-                    title: "Hobby",
-                    chipTitles: ["Paint", "Read", "Code", "Video Games"]),
+                  title: "Hobby",
+                  chipTitles: ["Paint", "Read", "Code", "Video Games"],
+                  activities: activities,
+                  updateActivites: updateActivites,
+                ),
                 SecondPageRow(
-                    title: "Interaction",
-                    chipTitles: ["Socialise", "Social Media"]),
+                  title: "Interaction",
+                  chipTitles: ["Socialize", "Social Media"],
+                  activities: activities,
+                  updateActivites: updateActivites,
+                ),
+                SecondPageRow(
+                  title: "Sleep",
+                  chipTitles: ["Good Sleep", "Moderate Sleep", "Bad Sleep"],
+                  activities: activities,
+                  updateActivites: updateActivites,
+                ),
+                SecondPageRow(
+                  title: "Others",
+                  chipTitles: ["Streaming Platforms", "Smoking", "Junk Food"],
+                  activities: activities,
+                  updateActivites: updateActivites,
+                ),
                 // SecondPageRow(title: "Something", chipTitles: ["Jogging", ""]),
                 // SecondPageRow(title: "Something", chipTitles: ["Jogging", "Netflix"]),
                 Row(
@@ -330,10 +413,10 @@ class _HomePageState extends State<HomePage> {
   Widget modalThirdSheetPage(double h) {
     return SingleChildScrollView(
       child: Container(
-        height: h,
+        //height: h,
         color: Colors.transparent,
-        child: SingleChildScrollView(
-          child: new Container(
+        child: Container(
+          child: Container(
               padding: EdgeInsets.all(10),
               child: Column(
                 children: <Widget>[
@@ -356,20 +439,29 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  ThirdPageRow(title: "Meditate"),
-                  ThirdPageRow(title: "Read"),
-                  // ThirdPageRow(),
-                  // ThirdPageRow(),
+                  Column(
+                    children: activities
+                        .asMap()
+                        .map((index, data) {
+                          return MapEntry(
+                              index,
+                              ThirdPageRow(
+                                title: data,
+                                index: index,
+                                updateTimeSpent: updateTimeSpent,
+                              ));
+                        })
+                        .values
+                        .toList(),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            pageNumber = 1;
-                          });
-                          Navigator.of(context).pop();
-                          _modalBottomSheetMenu();
+                          print(_moodIndex);
+                          print(activities);
+                          print(timeSpent);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width - 80,
@@ -380,7 +472,7 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.blueAccent,
                           ),
                           child: Text(
-                            "NEXT",
+                            "SUBMIT",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 24,
@@ -409,7 +501,7 @@ class _HomePageState extends State<HomePage> {
                 MediaQuery.of(context).size.height * 0.7);
           } else if (pageNumber == 3) {
             return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 0.7);
+                MediaQuery.of(context).size.height * 1.2);
           } else {
             return modalThirdSheetPage(
                 MediaQuery.of(context).size.height * 0.7);

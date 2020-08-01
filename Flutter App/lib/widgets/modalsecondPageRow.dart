@@ -5,23 +5,38 @@ import 'package:flutter/material.dart';
 import 'package:parallax/widgets/activityCard.dart';
 
 class SecondPageRow extends StatelessWidget {
-
-  String title;
-  List<String> chipTitles;
+  final String title;
+  final List<String> chipTitles, activities;
+  final Function updateActivites;
 
   SecondPageRow({
     this.title,
-    this.chipTitles
+    this.chipTitles,
+    this.activities,
+    this.updateActivites,
   });
 
-  List<Widget> something(){
-    List<Widget> arr=[];
-    var a=chipTitles.map((data){
-      return arr.add(ActivityCard(title: data));
-    });
-    // print("A:");
+  List<Widget> something() {
+    List<Widget> arr = [];
+
+    var a = chipTitles.map(
+      (data) {
+        Color color = Colors.black26;
+        print(activities);
+        print(activities.contains(data));
+        if (activities.contains(data)) {
+          color = Colors.lightBlue;
+        }
+        return arr.add(
+          ActivityCard(
+            title: data,
+            color: color,
+            updateActivites: updateActivites,
+          ),
+        );
+      },
+    );
     print(a);
-    // print(arr);
     return arr;
   }
 
@@ -29,7 +44,7 @@ class SecondPageRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10),
-          child: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -41,15 +56,15 @@ class SecondPageRow extends StatelessWidget {
           ),
           // Row(
           Wrap(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            alignment: WrapAlignment.center,
-            children: something()
-          //     <Widget>[
-          //     // ActivityCard(title: "Jogging"),
-          //     // ActivityCard(title: "Watch Cinema"),
-              
-          //  ],
-          ),
+              // mainAxisAlignment: MainAxisAlignment.center,
+              alignment: WrapAlignment.center,
+              children: something()
+              //     <Widget>[
+              //     // ActivityCard(title: "Jogging"),
+              //     // ActivityCard(title: "Watch Cinema"),
+
+              //  ],
+              ),
         ],
       ),
     );

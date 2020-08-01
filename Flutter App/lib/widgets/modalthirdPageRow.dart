@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class ThirdPageRow extends StatefulWidget {
 
-  String title;
+  final String title;
+  final int index;
+  final Function updateTimeSpent;
 
   ThirdPageRow({
-    this.title
+    this.title,
+    this.index,
+    this.updateTimeSpent,
   });
 
   @override
@@ -40,13 +44,13 @@ class _ThirdPageRowState extends State<ThirdPageRow> {
                 margin: EdgeInsets.only(right: 12),
                 child: GestureDetector(
                   onTap: (){
-                    if((duration-1)<=0)
-                     {
-                       duration=0;
-                     }
                     setState(() {
                       duration-=1;
+                      if(duration<0) {
+                        duration+=1;
+                      }
                     });
+                    widget.updateTimeSpent(widget.index, duration);
                   },
                   child: Text(
                     "-",
@@ -60,8 +64,7 @@ class _ThirdPageRowState extends State<ThirdPageRow> {
                 // margin: EdgeInsets.only(right: 12),
                 child: GestureDetector(
                   child: Text(
-                    // "2",
-                    duration.toString()=='-1'?'0':duration.toString(),
+                    duration.toString(),
                     style: TextStyle(
                       fontSize: 21
                     ),
@@ -75,6 +78,7 @@ class _ThirdPageRowState extends State<ThirdPageRow> {
                     setState(() {
                       duration+=1;
                     });
+                    widget.updateTimeSpent(widget.index, duration);
                   },
                   child: Text(
                     "+",

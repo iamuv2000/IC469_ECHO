@@ -12,7 +12,12 @@ class User {
   });
 
   factory User.fromJson(dynamic json) {
-    return User(uid: json["uid"], name: json["name"], email: json["email"]);
+    return User(
+      uid: json["uid"],
+      name: json["name"],
+      email: json["email"],
+      mobile: json["mobile"],
+    );
   }
 
   factory User.fromBackend(dynamic json) {
