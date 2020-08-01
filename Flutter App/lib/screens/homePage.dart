@@ -26,12 +26,12 @@ class _HomePageState extends State<HomePage> {
   //     );
   //   });
   // }
-  
-  bool showFab=true;
 
-  double _height=240.0;
+  bool showFab = true;
 
-  int pageNumber=1;
+  double _height = 240.0;
+
+  int pageNumber = 1, _moodIndex = -1;
 
   void showFoatingActionButton(bool value) {
     setState(() {
@@ -39,12 +39,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget modalFirstSheetPage(double h){
+  Widget modalFirstSheetPage(double h) {
     return Container(
       height: h,
       color: Colors.transparent,
       child: new Container(
-        padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(10),
           // decoration: new BoxDecoration(
           //     color: Colors.white,
           //     borderRadius: new BorderRadius.only(
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           //       )
           //     ),
           child: SingleChildScrollView(
-                      child: Column(
+            child: Column(
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,34 +62,41 @@ class _HomePageState extends State<HomePage> {
                       child: Text(
                         "How was your day?",
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700
-                        ),
+                            fontSize: 18, fontWeight: FontWeight.w700),
                       ),
                     ),
                     Container(
                       child: IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        }
-                      ),
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }),
                     ),
                   ],
                 ),
                 // Wrap(
                 //                 children: [
-                                  // Row(
-                                    Wrap(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
+                // Row(
+                Wrap(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _moodIndex = 0;
+                        });
+                        Navigator.pop(context);
+                        _modalBottomSheetMenu();
+                      },
+                      child: Container(
                         margin: EdgeInsets.all(10),
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: _moodIndex == 0 ? Colors.lightBlue : Colors.transparent,
                               maxRadius: 27,
+                              backgroundImage:
+                                  AssetImage("images/awesome_icon.png"),
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 6),
@@ -98,13 +105,24 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Container(
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _moodIndex = 1;
+                        });
+                        Navigator.pop(context);
+                        _modalBottomSheetMenu();
+                      },
+                      child: Container(
                         margin: EdgeInsets.all(10),
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: _moodIndex == 1 ? Colors.lightBlue : Colors.transparent,
                               maxRadius: 27,
+                              backgroundImage:
+                                  AssetImage("images/good_icon.png"),
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 6),
@@ -113,13 +131,24 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Container(
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _moodIndex = 2;
+                        });
+                        Navigator.pop(context);
+                        _modalBottomSheetMenu();
+                      },
+                      child: Container(
                         margin: EdgeInsets.all(10),
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: _moodIndex == 2 ? Colors.lightBlue : Colors.transparent,
                               maxRadius: 27,
+                              backgroundImage:
+                                  AssetImage("images/meh_icon.png"),
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 6),
@@ -128,13 +157,24 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Container(
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _moodIndex = 3;
+                        });
+                        Navigator.pop(context);
+                        _modalBottomSheetMenu();
+                      },
+                      child: Container(
                         margin: EdgeInsets.all(10),
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: _moodIndex == 3 ? Colors.lightBlue : Colors.transparent,
                               maxRadius: 27,
+                              backgroundImage:
+                                  AssetImage("images/bad_icon.png"),
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 6),
@@ -143,13 +183,24 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Container(
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _moodIndex = 4;
+                        });
+                        Navigator.pop(context);
+                        _modalBottomSheetMenu();
+                      },
+                      child: Container(
                         margin: EdgeInsets.all(10),
                         child: Column(
                           children: <Widget>[
                             CircleAvatar(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: _moodIndex == 4 ? Colors.lightBlue : Colors.transparent,
                               maxRadius: 27,
+                              backgroundImage:
+                                  AssetImage("images/awful_icon.png"),
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 6),
@@ -158,23 +209,24 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
                 //                 ]
                 // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          pageNumber=2;
+                          pageNumber = 2;
                         });
                         Navigator.of(context).pop();
                         _modalBottomSheetMenu();
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width-80,
+                        width: MediaQuery.of(context).size.width - 80,
                         padding: EdgeInsets.symmetric(vertical: 10),
                         margin: EdgeInsets.only(top: 15),
                         decoration: BoxDecoration(
@@ -185,10 +237,9 @@ class _HomePageState extends State<HomePage> {
                           "NEXT",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white
-                          ),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
                         ),
                       ),
                     ),
@@ -196,18 +247,17 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-          )
-        ),
+          )),
     );
   }
 
-  Widget modalSecondSheetPage(double h){
+  Widget modalSecondSheetPage(double h) {
     return Container(
       height: h,
       color: Colors.transparent,
       child: SingleChildScrollView(
-              child: new Container(
-          padding: EdgeInsets.all(10),
+        child: new Container(
+            padding: EdgeInsets.all(10),
             child: Column(
               children: <Widget>[
                 Row(
@@ -217,39 +267,42 @@ class _HomePageState extends State<HomePage> {
                       child: Text(
                         "What were you up to?",
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700
-                        ),
+                            fontSize: 18, fontWeight: FontWeight.w700),
                       ),
                     ),
                     Container(
                       child: IconButton(
-                        icon: Icon(Icons.clear),
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        }
-                      ),
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }),
                     ),
                   ],
                 ),
-                SecondPageRow(title: "Self-care", chipTitles: ["Jogging", "Exercise", "Meditate"]),
-                SecondPageRow(title: "Hobby", chipTitles: ["Paint", "Read", "Code", "Video Games"]),
-                SecondPageRow(title: "Interaction", chipTitles: ["Socialise", "Social Media"]),
+                SecondPageRow(
+                    title: "Self-care",
+                    chipTitles: ["Jogging", "Exercise", "Meditate"]),
+                SecondPageRow(
+                    title: "Hobby",
+                    chipTitles: ["Paint", "Read", "Code", "Video Games"]),
+                SecondPageRow(
+                    title: "Interaction",
+                    chipTitles: ["Socialise", "Social Media"]),
                 // SecondPageRow(title: "Something", chipTitles: ["Jogging", ""]),
                 // SecondPageRow(title: "Something", chipTitles: ["Jogging", "Netflix"]),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          pageNumber=3;
+                          pageNumber = 3;
                         });
                         Navigator.of(context).pop();
-                       _modalBottomSheetMenu();
+                        _modalBottomSheetMenu();
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width-80,
+                        width: MediaQuery.of(context).size.width - 80,
                         padding: EdgeInsets.symmetric(vertical: 10),
                         margin: EdgeInsets.only(top: 15),
                         decoration: BoxDecoration(
@@ -260,30 +313,28 @@ class _HomePageState extends State<HomePage> {
                           "NEXT",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white
-                          ),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
                         ),
                       ),
                     ),
                   ],
                 ),
               ],
-            )
-          ),
+            )),
       ),
     );
   }
 
-  Widget modalThirdSheetPage(double h){
+  Widget modalThirdSheetPage(double h) {
     return SingleChildScrollView(
       child: Container(
         height: h,
         color: Colors.transparent,
         child: SingleChildScrollView(
-                child: new Container(
-            padding: EdgeInsets.all(10),
+          child: new Container(
+              padding: EdgeInsets.all(10),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -293,18 +344,15 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           "What were you up to?",
                           style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700
-                          ),
+                              fontSize: 18, fontWeight: FontWeight.w700),
                         ),
                       ),
                       Container(
                         child: IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: (){
-                            Navigator.of(context).pop();
-                          }
-                        ),
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
                       ),
                     ],
                   ),
@@ -316,15 +364,15 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                            pageNumber=1;
+                            pageNumber = 1;
                           });
                           Navigator.of(context).pop();
                           _modalBottomSheetMenu();
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width-80,
+                          width: MediaQuery.of(context).size.width - 80,
                           padding: EdgeInsets.symmetric(vertical: 10),
                           margin: EdgeInsets.only(top: 15),
                           decoration: BoxDecoration(
@@ -335,52 +383,51 @@ class _HomePageState extends State<HomePage> {
                             "NEXT",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white
-                            ),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ],
-              )
-            ),
+              )),
         ),
       ),
     );
   }
 
-  void _modalBottomSheetMenu(){
+  void _modalBottomSheetMenu() {
     showModalBottomSheet(
         context: context,
-        builder: (builder){
-          if(pageNumber==1){
+        builder: (builder) {
+          if (pageNumber == 1) {
             return modalFirstSheetPage(330.0);
-          }
-          else if(pageNumber==2){
-            return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
-          }
-          else if(pageNumber==3){
-            return modalThirdSheetPage(MediaQuery.of(context).size.height*0.7);
+          } else if (pageNumber == 2) {
+            return modalSecondSheetPage(
+                MediaQuery.of(context).size.height * 0.7);
+          } else if (pageNumber == 3) {
+            return modalThirdSheetPage(
+                MediaQuery.of(context).size.height * 0.7);
+          } else {
+            return modalThirdSheetPage(
+                MediaQuery.of(context).size.height * 0.7);
           }
           // return modalFirstSheetPage(240.0);
           // return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
           // return modalThirdSheetPage(MediaQuery.of(context).size.height*0.7);
-        }
-    );
+        });
   }
 
-  List<Widget> constructColumn(){
-    var arr=<Widget>[
+  List<Widget> constructColumn() {
+    var arr = <Widget>[
       DateWidget(),
       ActivityWidget(),
     ];
     arr.add(ArticleWidget());
     return arr;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -391,27 +438,24 @@ class _HomePageState extends State<HomePage> {
         leading: Container(),
         title: Text(
           "Hello, Gagan",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
             child: GestureDetector(
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfilePage(),
-                ),
-              );
-            },
-            child: CircleAvatar(
-              backgroundColor: Colors.grey,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.grey,
+              ),
             ),
-          ),
           ),
         ],
         elevation: 0,
@@ -421,13 +465,12 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         padding: EdgeInsets.all(21),
         // children: <Widget>[
-        child:Column(
-          children: constructColumn()
-          // <Widget>[
-          //   DateWidget(),
-          //   ActivityWidget(),
-          // ].add(ArticleWidget()),
-        ),
+        child: Column(children: constructColumn()
+            // <Widget>[
+            //   DateWidget(),
+            //   ActivityWidget(),
+            // ].add(ArticleWidget()),
+            ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
@@ -436,20 +479,16 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               GestureDetector(
-                onTap: (){
-                },
+                onTap: () {},
                 child: Container(
-                  child: IconButton(
-                    icon: Icon(Icons.home),
-                    onPressed: (){}
-                  ),
+                  child: IconButton(icon: Icon(Icons.home), onPressed: () {}),
                 ),
               ),
               Container(
                 child: IconButton(
                   icon: Icon(Icons.people),
-                    onPressed: (){
-                      Navigator.push(
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MessageList(),
@@ -461,7 +500,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 child: IconButton(
                   icon: Icon(Icons.message),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -476,20 +515,18 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: showFab
-      ?
-      FloatingActionButton(
-        backgroundColor: Colors.black,
-        onPressed: (){},
-        child: IconButton(
-          icon: Icon(Icons.add),
-          onPressed: (){
-            _modalBottomSheetMenu();
-          },
-          iconSize: 33,
-        ),
-      )
-      :
-      Container(),
+          ? FloatingActionButton(
+              backgroundColor: Colors.black,
+              onPressed: () {},
+              child: IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  _modalBottomSheetMenu();
+                },
+                iconSize: 33,
+              ),
+            )
+          : Container(),
     );
   }
 }
