@@ -1,6 +1,6 @@
 <div align="center">
 
-# Echo CBT App Server
+# Echo CBT
 
 </div>
 

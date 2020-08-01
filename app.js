@@ -13,6 +13,7 @@ const CreateStory = require('./routes/CreateStory.js')
 const GetStories = require('./routes/GetStories.js')
 const GetReply = require('./routes/bot/GetReply.js')
 const SubmitActivity = require('./routes/activity/SubmitActivity.js')
+const DailyActivity = require("./routes/activity/DailyActivities.js")
 
 // Using imported middleware and routes
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -28,6 +29,7 @@ app.use(CreateStory)
 app.use(GetStories)
 app.use(GetReply)
 app.use(SubmitActivity)
+app.use(DailyActivity)
 
 const PORT = process.env.PORT
 

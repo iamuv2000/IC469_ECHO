@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Please keep the two meta tags below at the top to ensure proper document rendering-->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Echo CBT</title>
+
+        <!-- meta setup -->
+        <meta name="application-name" content="Echo CBT">
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="description" content="Depression is a common illness worldwide with more than 264 million effected. Surprisingly, roughly 800000 commit suicide each year due to depression. Team Echo presents you the CBT solution to help individuals recover from depression and track their growth in realtime. Our team have researched a lot and come up with features that are a key for dealing with depression. Apart from this we also let the user track his/her overall growth. The app helps its users become aware of inaccurate or negative thinking so you can view challenging situations better and respond to them more effectively. Our app also provides the user with a way to track what activities affect his daily mood so that he/she can promote those activities which are beneficial for them. ">
+        <meta name="keywords" content="Echo, Echo-CBT, CBT, Cognitive Behavioral Therapy, SIH, Smart India Hackathon, SIH2020">
+        <meta name="author" content="Echo Team">
+        <meta name="robots" content="index,follow">
+        <meta name="googlebot" content="index,follow">
+
+        <!-- <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Blinker:wght@600&display=swap');
+
+        body {
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+            margin: 0px;
+            font-family: 'Blinker', sans-serif;
+            font-weight: 800;
+            opacity: 0.8;
+        }
+
+        .landingPage {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .landingOverlay {
+            position: absolute;
+            top: 0px;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .header {
+            font-size: 84px;
+            margin: 0px auto;
+        }
+
+        .coming {
+            position: absolute;
+            bottom: 0px;
+            right: 10px
+        }
+    </style>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div class="landingPage" id="landingPage">
+        </div>
+        <div class="landingOverlay">
+            <h1 class="header">Echo CBT</h1>
+            <caption>Your Inner Voice</caption>
+            <h4 class="coming">Coming Soon</h4>
+        </div>
+    </body>
+    <script src="three.js"></script>
+    <script src="clouds.js"></script>
+    <script>
+
+        VANTA.CLOUDS({
+            el: "#landingPage",
+            mouseControls: true,
+            touchControls: true,
+        })
+
+    </script>
+</html>
