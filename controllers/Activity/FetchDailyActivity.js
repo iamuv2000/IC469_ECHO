@@ -1,13 +1,15 @@
 const responses = require('../../configs/responses.js')
 const Activity = require('../../models/Activity.js')
+const { keyword } = require('chalk')
 
 const FetchDailyActivity = (uid) => {
     return new Promise((resolve, reject) => {
         Activity.findOne({ uid })
             .then((activityInstance) => activityInstance.toObject())
             .then((activity) => {
-                console.log(activity)
-                if (activity.activityRecords.length < 4) {
+                // console.log(activity)
+                const lengthOfRecords = activity.activityRecords.length;
+                if (lengthOfRecords < 4) {
                     return resolve({
                         statusCode: 200,
                         serverMessage: responses['200'],
@@ -18,6 +20,20 @@ const FetchDailyActivity = (uid) => {
                         error: null
                     })
                 }
+                var alteredArray = [];
+                const startIndex = lengthOfRecords > 15 ? lengthOfRecords - 16 : 0;
+                const endIndex = lengthOfRecords;
+                activity.activityRecords.slice(startIndex, endIndex).forEach(async (record) => {
+                    var vals = [];
+                    record.forEach((value, key, map) => {
+                        vals.push(value);
+                    })
+                    return alteredArray.push(vals);
+                })
+                // console.log(JSON.stringify({
+                //     indexKeys: activity.userActivities,
+                //     record: alteredArray,
+                // }))
                 resolve({
                     statusCode: 200,
                     serverMessage: responses['200'],
