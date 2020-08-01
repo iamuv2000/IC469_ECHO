@@ -16,14 +16,12 @@ mixin UserModel on Model{
   //  var body;
    var body=json.encode({
       "uid": user.uid,
-      "name": user.name,
-      "email": user.email
+      "displayName": user.name,
+      "email": user.email,
+      "mobile": "9876543210",
    });
-  //  print("BOdy1");
-  //  print(body);
    try{
       print("Sending Log In Request!");
-      // print(body);
       http.Response response=await http.post(
           url_register,
           headers: {"Content-type": "application/json"},
@@ -35,8 +33,6 @@ mixin UserModel on Model{
       statuscode=response.statusCode;
       if(response.statusCode==200)
        {
-        //  print("User:");
-        //  print(user.uid);
         Shared.setUserData(user);
         return jsonDecode(response.body);
       }

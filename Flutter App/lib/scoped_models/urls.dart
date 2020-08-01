@@ -1,11 +1,12 @@
 // const baseUrl="http://172.17.228.131:3000";//172.17.235.30:8080
 // const baseUrl="http://172.17.235.30:8080";
-const baseUrl="https://echo-gfas.herokuapp.com";
+//const baseUrl="https://echo-gfas.herokuapp.com";
 const baseUrl1="http://172.17.235.30:8080";
+const baseUrl="https://echo-cbt-server.herokuapp.com/";
 
 const url_getAllPosts="$baseUrl/auth/allPosts";
 const url_uploadPost="$baseUrl/auth/uploadPost";
-const url_register="$baseUrl/register";
+const url_register="$baseUrl/create_user";
 const url_startChat="$baseUrl/auth/startchat";
 const url_getAllChats="$baseUrl/auth/getChats";
 const url_getAllMessages="$baseUrl/auth/getAllMessages";

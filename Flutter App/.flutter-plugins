@@ -1,0 +1,19 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.13.3/
+cloud_firestore_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-0.1.0+3/
+cloud_functions=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions-0.4.2/
+cloud_functions_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions_web-1.0.3/
+device_apps=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/device_apps-1.0.9/
+firebase_auth=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.15.4/
+firebase_auth_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-0.1.2/
+firebase_core=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.4/
+firebase_core_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2/
+firebase_database=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_database-3.1.1/
+google_sign_in=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.1.4/
+google_sign_in_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.8.3+2/
+shared_preferences=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.6+2/
+shared_preferences_macos=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+6/
+shared_preferences_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+4/
+url_launcher=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.2/
+url_launcher_macos=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+4/
+url_launcher_web=/home/fenil/flutter_linux_v1.9.1+hotfix.6-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.1+1/
