@@ -6,9 +6,11 @@ import 'package:parallax/screens/dialogFlow.dart';
 import 'package:parallax/widgets/messageCard.dart';
 import 'package:parallax/scoped_models/mainModel.dart';
 import 'package:parallax/screens/homePage.dart';
-import 'package:parallax/screens/dialogFlow.dart';
 import 'package:scoped_model/scoped_model.dart';
-// import 'package:parallax/models/chatList.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class MessageList extends StatefulWidget {
   @override
@@ -18,24 +20,45 @@ class MessageList extends StatefulWidget {
 class _MessageListState extends State<MessageList> {
   var messages = null;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final postController = TextEditingController();
+
+  Future<http.Response> submitPost() {
+    return http.post(
+      'https://echo-cbt-server.herokuapp.com/user/create_story',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Bearer' : ''
+      },
+      body: jsonEncode(<String, String>{
+        'story': postController.text,
+        'isAnonymous': "true"
+      }),
+    );
+  }
+
+  Future<http.Response> getAllPosts() {
+    return  http.post(
+        'https://echo-cbt-server.herokuapp.com/user/stories',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Bearer' : ''
+        });
+  }
 
   @override
   void initState() {
     super.initState();
-    final MainModel model = MainModel();
-    _initializePage(model);
+    _initializePage();
   }
 
-  void _initializePage(MainModel model) async {
-    var a = await model.getAllPosts();
-    // print(a);
-    // print(a["payload"]["posts"]);
-    setState(() {
-      // messages=PostsModel.fromJson(a["payload"]["posts"]).messages;
-      messages = PostsModel.fromJson(a["payload"]["posts"]).posts;
-    });
-    // print(messages.messages);
-    // var messages=PostsModel.fromJson(a["payload"]["posts"]);
+  void _initializePage() async {
+    print("FETCHING ARTICLES!");
+    var allPosts  = await getAllPosts();
+    print(allPosts.body);
+//    var a = await model.getAllPosts();
+//    setState(() {
+//      messages = PostsModel.fromJson(a["payload"]["posts"]).posts;
+//    });
   }
 
   List<Widget> _buildAppBarActionButtons() {
@@ -51,7 +74,6 @@ class _MessageListState extends State<MessageList> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ChatList(),
-                  // builder: (context) => HomePageDialogflow(),
                 ),
               );
             }),
@@ -205,6 +227,7 @@ class _MessageListState extends State<MessageList> {
                                         children: <Widget>[
                                           Expanded(
                                             child: TextField(
+                                              controller: postController,
                                               keyboardType: TextInputType.multiline,
                                               maxLines: null,
                                             ),
@@ -217,7 +240,10 @@ class _MessageListState extends State<MessageList> {
                                         children: <Widget>[
                                           Expanded(
                                             child: RaisedButton(
-                                              onPressed: () {},
+                                              onPressed:  () async{
+                                                var result = await submitPost();
+                                                print(result.body);
+                                              },
                                               padding: EdgeInsets.all(10),
                                               shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(8.0),
