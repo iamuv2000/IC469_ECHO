@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Echo CBT</title>
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Blinker:wght@600&display=swap');
+
+        body {
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+            margin: 0px;
+            font-family: 'Blinker', sans-serif;
+            font-weight: 800;
+            opacity: 0.8;
+        }
+
+        .landingPage {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .landingOverlay {
+            position: absolute;
+            top: 0px;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .header {
+            font-size: 84px;
+            margin: 0px auto;
+        }
+
+        .coming {
+            position: absolute;
+            bottom: 0px;
+            right: 10px
+        }
+    </style>
+    <body>
+        <div class="landingPage" id="landingPage">
+        </div>
+        <div class="landingOverlay">
+            <h1 class="header">Echo CBT</h1>
+            <caption>Your Inner Voice</caption>
+            <h4 class="coming">Coming Soon</h4>
+        </div>
+    </body>
+    <script src="three.js"></script>
+    <script src="clouds.js"></script>
+    <script>
+
+        VANTA.CLOUDS({
+            el: "#landingPage",
+            mouseControls: true,
+            touchControls: true,
+        })
+
+    </script>
+</html>
