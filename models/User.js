@@ -24,6 +24,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
+  },
+  guideEmail: {
+    type: String,
+    required: false
   }
 })
 

@@ -18,6 +18,7 @@ const AddDiary = require('./routes/diary/AddDiary.js')
 const GetUserDiary = require('./routes/diary/GetUserDiary.js')
 const AddComment = require('./routes/AddComment.js')
 const GetStoryComments = require('./routes/GetStoryComments.js')
+const AddGuideEmail = require('./routes/user/AddGuideEmail.js')
 
 // Using imported middleware and routes
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -38,6 +39,7 @@ app.use(AddDiary)
 app.use(GetUserDiary)
 app.use(AddComment)
 app.use(GetStoryComments)
+app.use(AddGuideEmail)
 
 // require('./controllers/EmailAPI/test-email-setup.js')
 
