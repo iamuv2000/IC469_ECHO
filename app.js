@@ -39,6 +39,8 @@ app.use(GetUserDiary)
 app.use(AddComment)
 app.use(GetStoryComments)
 
+// require('./controllers/EmailAPI/test-email-setup.js')
+
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
