@@ -1,3 +1,5 @@
+/* eslint-disable prefer-promise-reject-errors */
+const fetch = require('node-fetch')
 const responses = require('../../configs/responses.js')
 const Activity = require('../../models/Activity.js')
 
@@ -8,7 +10,7 @@ const FetchDailyActivity = (uid) => {
       .then((activity) => {
         // console.log(activity)
         const lengthOfRecords = activity.activityRecords.length
-        if (lengthOfRecords < 4) {
+        if (lengthOfRecords < 5) {
           return resolve({
             statusCode: 200,
             serverMessage: responses['200'],
@@ -29,18 +31,42 @@ const FetchDailyActivity = (uid) => {
           })
           return alteredArray.push(vals)
         })
-        // console.log(JSON.stringify({
-        //   indexKeys: activity.userActivities,
-        //   record: alteredArray
-        // }))
+        const body = JSON.stringify({
+          indexKeys: activity.userActivities,
+          record: alteredArray
+        })
+        return fetch('https://echo-cbt-micro.herokuapp.com/activity-suggestions', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body
+        })
+      })
+      .then((r) => r.json())
+      .then((response) => {
+        const respKeys = Object.keys(response)
+        respKeys.sort((a, b) => {
+          return response[b] - response[a]
+        })
         resolve({
           statusCode: 200,
           serverMessage: responses['200'],
           payload: {
-            activities: ['jogging', 'meditate', 'code', 'netflix', 'paint'],
+            activities: respKeys.slice(0, 5),
             hasEnoughRecords: true
           },
           error: null
+        })
+      })
+      .catch((err) => {
+        console.log(err.message)
+        reject({
+          statusCode: 500,
+          serverMessage: responses['500'],
+          payload: {},
+          error: 'Server Side Error'
         })
       })
   })
