@@ -2,6 +2,13 @@
 
 # Echo CBT
 
+![GitHub repo size](https://img.shields.io/github/repo-size/sarthakpranesh/IC469_ECHO)
+![GitHub top language](https://img.shields.io/github/languages/top/sarthakpranesh/IC469_ECHO)
+[![GitHub issues](https://img.shields.io/github/issues/sarthakpranesh/IC469_ECHO)](https://github.com/sarthakpranesh/IC469_ECHO/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/sarthakpranesh/IC469_ECHO)](https://github.com/sarthakpranesh/IC469_ECHO/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/sarthakpranesh/IC469_ECHO)](https://github.com/sarthakpranesh/IC469_ECHO/stargazers)
+![GitHub](https://img.shields.io/github/license/sarthakpranesh/IC469_ECHO)
+
 </div>
 
 <br />
