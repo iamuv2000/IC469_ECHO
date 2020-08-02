@@ -12,9 +12,9 @@ const GetUser = require('./routes/user/GetUser.js')
 const GetUserStories = require('./routes/user/GetUserStories.js')
 const CreateStory = require('./routes/CreateStory.js')
 const GetStories = require('./routes/GetStories.js')
-const GetReply = require('./routes/bot/GetReply.js')
 const SubmitActivity = require('./routes/activity/SubmitActivity.js')
 const DailyActivity = require('./routes/activity/DailyActivities.js')
+const AddDiary = require('./routes/diary/AddDiary.js')
 
 // Using imported middleware and routes
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -29,9 +29,9 @@ app.use(GetUser)
 app.use(GetUserStories)
 app.use(CreateStory)
 app.use(GetStories)
-app.use(GetReply)
 app.use(SubmitActivity)
 app.use(DailyActivity)
+app.use(AddDiary)
 
 const PORT = process.env.PORT
 

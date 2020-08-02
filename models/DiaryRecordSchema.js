@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const ChatSchema = mongoose.Schema({
-  uid: {
-    type: String,
+  date: {
+    type: Date,
     required: true
   },
-  message: {
+  entry: {
     type: String,
     required: true,
     trim: true
