@@ -3,7 +3,7 @@ const responses = require('../configs/responses.js')
 const FetchStoryComments = require('../controllers/Story/FetchStoryComments.js')
 
 route.get('/user/story/fetchComments', (req, res) => {
-  if ([undefined, null, ''].includes(req.body.storyId)) {
+  if ([undefined, null, ''].includes(req.query.storyId)) {
     return res.status(400).send({
       statusCode: 400,
       serverMessage: responses['400'],
