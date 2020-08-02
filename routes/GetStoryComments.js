@@ -11,7 +11,7 @@ route.get('/user/story/fetchComments', (req, res) => {
       error: 'Bad Request - incorrect or no story id passed'
     })
   }
-  FetchStoryComments(req.body.storyId)
+  FetchStoryComments(req.query.storyId)
     .then((resp) => res.status(resp.statusCode).send(resp))
     .catch((err) => res.status(err.statusCode).send(err))
 })
