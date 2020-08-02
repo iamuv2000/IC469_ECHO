@@ -15,6 +15,7 @@ const GetStories = require('./routes/GetStories.js')
 const SubmitActivity = require('./routes/activity/SubmitActivity.js')
 const DailyActivity = require('./routes/activity/DailyActivities.js')
 const AddDiary = require('./routes/diary/AddDiary.js')
+const GetUserDiary = require('./routes/diary/GetUserDiary.js')
 const AddComment = require('./routes/AddComment.js')
 
 // Using imported middleware and routes
@@ -33,6 +34,7 @@ app.use(GetStories)
 app.use(SubmitActivity)
 app.use(DailyActivity)
 app.use(AddDiary)
+app.use(GetUserDiary)
 app.use(AddComment)
 
 const PORT = process.env.PORT
