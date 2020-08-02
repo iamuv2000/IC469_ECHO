@@ -10,12 +10,8 @@ import 'package:parallax/models/user.dart';
 class MessageCard extends StatelessWidget {
 
   var message;
-  MainModel model;
 
-  MessageCard({
-    this.message,
-    this.model
-  });
+  MessageCard({this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -35,88 +31,83 @@ class MessageCard extends StatelessWidget {
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(bottom: 15, left: 10, right: 10, top: 10),
-                  child: Row(
+                  child: Wrap(
                     children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Colors.grey,
+                      Row(
+                        children: <Widget>[
+                          CircleAvatar(
+                            backgroundColor: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                message['isAnonymous'] ? "Anonymous Ant" : "Human",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 25),
+                                child: Text(
+                                  "10 hours ago",
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 50,
                       ),
                       Column(
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(left: 10),
-                            // child: Text(message.title),
-                            child: Text(message.name),
+                            child: Text(
+                                message['story'],
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(left: 25),
-                            child: Text("10 hours ago"),
-                          ),
-                          // Text("10 hours ago"),
                         ],
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  // margin: EdgeInsets.symmetric(horizontal: 5),
-                  margin: EdgeInsets.only(left: 15, right: 15),
-                  child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        // margin: EdgeInsets.only(top: 0),
-                        child: Flexible(
-                          child: Text(
-                            message.description,
-                            softWrap: true,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                GestureDetector(
-                 onTap: () async {
-                  //  print("Message UID:");
-                  //  print(message.uid);
-                   var a=Shared.getUserDetails();
-                  //  print(a);
-                  dynamic user;
-                  await a.then((data){
-                    //  print(data);
-                    //  print(data.runtimeType);
-                    //  print(jsonDecode(data));
-                    print("Something!");
-                    print(data.runtimeType);
-                    user=data;
-                   });
-                  //  print(user);
-                  //  print(user);
-                   var c=await model.startChat(user["uid"], message.uid);
-                  //  print(c);
-                   if(c["status"]==200)
-                    {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChatScreen(),
-                        ),
-                      );
-                    }
-                 },
+//                 onTap: () async {
+//                   var a=Shared.getUserDetails();
+//                  //  print(a);
+//                  dynamic user;
+//                  await a.then((data){
+//                    //  print(data);
+//                    //  print(data.runtimeType);
+//                    //  print(jsonDecode(data));
+//                    print("Something!");
+//                    print(data.runtimeType);
+//                    user=data;
+//                   });
+//                 },
                 child: Container(
                    margin: EdgeInsets.only(top: 10),
                    padding: EdgeInsets.symmetric(vertical: 10),
                    width: double.infinity,
                   child: Text(
-                    "Message Anonymous Ant",
+                    "Message ${message["isAnonymous"] ? "Anonymous Ant" : "Human"}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600
                     ),
                   ),
-                  color: Colors.black,
+                  color: Colors.orange,
                  ),
                ),
               ],
