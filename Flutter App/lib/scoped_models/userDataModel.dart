@@ -8,7 +8,6 @@ import 'urls.dart';
 import 'shared.dart';
 
 mixin ChipModel on Model {
-
   Future<dynamic> getAllAcitivityForHomePage() async {
     var statuscode;
     var message;
@@ -158,6 +157,47 @@ mixin ChipModel on Model {
     } catch (err) {
       print("Error sending daily activities!....$err");
       throw message;
+    }
+  }
+
+  Future<dynamic> sendThreapistEmail(String email) async {
+    var statuscode;
+    var message;
+    var body;
+    body = jsonEncode({
+      "email": email,
+    });
+    try {
+      print("Sending Therapist Email Request!");
+      var user = await Shared.getUserDetails();
+      http.Response response = await http.post(
+        url_sendTherapistEmail,
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + user.uid,
+        },
+        body: body,
+      );
+      print("Response for getting all activities:");
+      print(response.statusCode);
+      print(response.body);
+      statuscode = response.statusCode;
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["payload"]["activities"];
+      } else {
+        if (response.statusCode == 500 ||
+            response.statusCode == 400 ||
+            response.statusCode == 404) {
+          throw "Server Error!";
+        } else {
+          print("This wala error!");
+          message = jsonDecode(response.body)["message"];
+          throw message;
+        }
+      }
+    } catch (err) {
+      print("Error sending therapist email!....$err");
+      return {"code": statuscode, "message": err};
     }
   }
 }
