@@ -6,9 +6,11 @@ import 'package:parallax/screens/dialogFlow.dart';
 import 'package:parallax/widgets/messageCard.dart';
 import 'package:parallax/scoped_models/mainModel.dart';
 import 'package:parallax/screens/homePage.dart';
-import 'package:parallax/screens/dialogFlow.dart';
 import 'package:scoped_model/scoped_model.dart';
-// import 'package:parallax/models/chatList.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class MessageList extends StatefulWidget {
   @override
@@ -16,53 +18,73 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageListState extends State<MessageList> {
-
-  var messages=null;
+  var messages = null;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final postController = TextEditingController();
+
+  Future<http.Response> submitPost() {
+    return http.post(
+      'https://echo-cbt-server.herokuapp.com/user/create_story',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Bearer' : ''
+      },
+      body: jsonEncode(<String, String>{
+        'story': postController.text,
+        'isAnonymous': "true"
+      }),
+    );
+  }
+
+  Future<http.Response> getAllPosts() {
+    return  http.post(
+        'https://echo-cbt-server.herokuapp.com/user/stories',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Bearer' : ''
+        });
+  }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    final MainModel model=MainModel();
-    _initializePage(model);
+    _initializePage();
   }
 
-  void _initializePage(MainModel model) async {
-    var a=await model.getAllPosts();
-    // print(a);
-    // print(a["payload"]["posts"]);
-    setState(() {
-      // messages=PostsModel.fromJson(a["payload"]["posts"]).messages;
-      messages=PostsModel.fromJson(a["payload"]["posts"]).posts;
-    });
-    // print(messages.messages);
-    // var messages=PostsModel.fromJson(a["payload"]["posts"]);
+  void _initializePage() async {
+    print("FETCHING ARTICLES!");
+    var allPosts  = await getAllPosts();
+    print(allPosts.body);
+//    var a = await model.getAllPosts();
+//    setState(() {
+//      messages = PostsModel.fromJson(a["payload"]["posts"]).posts;
+//    });
   }
 
-  List<Widget> _buildAppBarActionButtons(){
+  List<Widget> _buildAppBarActionButtons() {
     return <Widget>[
-          Container(
-            child: IconButton(
-              icon: Icon(
-                Icons.bookmark,
-                size: 30,
-                color: Colors.black,
-              ),
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ChatList(),
-                  // builder: (context) => HomePageDialogflow(),
-                ),);
-              }
+      Container(
+        child: IconButton(
+            icon: Icon(
+              Icons.bookmark,
+              size: 30,
+              color: Colors.black,
             ),
-          ),
-        ];
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChatList(),
+                ),
+              );
+            }),
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model){
+      builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -77,33 +99,31 @@ class _MessageListState extends State<MessageList> {
             backgroundColor: Colors.white,
             leading: Container(),
           ),
-          body: 
-          messages==null
-          ?Container(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
-          :
-          ListView.builder(
-            itemCount: messages.length,
-            // itemCount: 1,
-            padding: EdgeInsets.all(0),
-            itemBuilder: (BuildContext context, int index){
-              return Container(
-                // child: Text("2"),
-                child: MessageCard(message: messages[index], model: model),
-                // child: MessageCard(PostModel(
-                //   description: "Somenhting",
-                //   isAno: true,
-                //   messageId: "Somehitng",
-                //   timeStamp: "Somebgujrng",
-                //   title: "SOmelfn",
-                //   uid: "asdlandjk"
-                // )),
-              );
-            }
-          ),
+          body: messages == null
+              ? Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: messages.length,
+                  // itemCount: 1,
+                  padding: EdgeInsets.all(0),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      // child: Text("2"),
+                      child:
+                          MessageCard(message: messages[index], model: model),
+                      // child: MessageCard(PostModel(
+                      //   description: "Somenhting",
+                      //   isAno: true,
+                      //   messageId: "Somehitng",
+                      //   timeStamp: "Somebgujrng",
+                      //   title: "SOmelfn",
+                      //   uid: "asdlandjk"
+                      // )),
+                    );
+                  }),
           bottomNavigationBar: BottomAppBar(
             child: Container(
               margin: EdgeInsets.all(15),
@@ -111,7 +131,7 @@ class _MessageListState extends State<MessageList> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       // Navigator.push(context, ChatList());
                       // Navigator.of(context).pop();
                       Navigator.pushReplacement(
@@ -134,7 +154,7 @@ class _MessageListState extends State<MessageList> {
                   Container(
                     child: IconButton(
                       icon: Icon(Icons.message),
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -164,26 +184,93 @@ class _MessageListState extends State<MessageList> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: (){},
+            onPressed: () {},
             backgroundColor: Colors.black,
             child: IconButton(
-              icon: Icon(
-                Icons.note_add,
-                color: Colors.white,
-                size: 33,
-              ),
-              onPressed: (){
-                scaffoldKey.currentState.showBottomSheet((context)=>Container(
-                  height: 150.0,
-                  color: Colors.red
-                )
-               );
-              }
-            ),
+                icon: Icon(
+                  Icons.note_add,
+                  color: Colors.white,
+                  size: 33,
+                ),
+                onPressed: () {
+                  scaffoldKey.currentState
+                      .showBottomSheet((context) => Expanded(
+                        child: Container(
+                              height: MediaQuery.of(context).size.width * 0.65,
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          "Create a new post",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Icon(Icons.close,
+                                              color: Colors.black, size: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: TextField(
+                                              controller: postController,
+                                              keyboardType: TextInputType.multiline,
+                                              maxLines: null,
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: RaisedButton(
+                                              onPressed:  () async{
+                                                var result = await submitPost();
+                                                print(result.body);
+                                              },
+                                              padding: EdgeInsets.all(10),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                              ),
+                                              elevation: 0.5,
+                                              color: Colors.lightBlueAccent,
+                                              child: const Text(
+                                                  'Post',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                    color: Colors.white
+                                                  ),
+                                              ),
+                                            )
+                                          )
+                                        ],
+                                      ))
+
+                                ],
+                              ),
+                            ),
+                      ));
+                }),
           ),
         );
-       },
-            // child: ,
-      );
-    }
+      },
+      // child: ,
+    );
+  }
 }

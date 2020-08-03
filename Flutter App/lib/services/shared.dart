@@ -14,7 +14,6 @@ class Shared {
   }
 
   static void storeUser(User user) {
-    prefs.setString('user', json.encode(user.toMap()));
     print('User Set!');
   }
 

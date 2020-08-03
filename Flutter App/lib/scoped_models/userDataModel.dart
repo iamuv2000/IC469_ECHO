@@ -7,23 +7,27 @@ import 'package:http/http.dart' as http;
 import 'urls.dart';
 import 'shared.dart';
 
-
 mixin ChipModel on Model {
+
   Future<dynamic> getAllAcitivityForHomePage() async {
     var statuscode;
     var message;
     try {
       print("Sending get all acitivty Request!");
+      var user = await Shared.getUserDetails();
       http.Response response = await http.get(
-        url_getAllActivities,
-        headers: {"Content-type": "application/json"},
+        url_getDailyActivites,
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + user.uid,
+        },
       );
       print("Response for getting all activities:");
       print(response.statusCode);
       print(response.body);
       statuscode = response.statusCode;
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        return jsonDecode(response.body)["payload"]["activities"];
       } else {
         if (response.statusCode == 500 ||
             response.statusCode == 400 ||
@@ -108,8 +112,11 @@ mixin ChipModel on Model {
     }
   }
 
-  Future<dynamic> sendDailyActivities(
-      {List<String> activityKeys, List<int> timeSpent, int moodIndex}) async {
+  Future<dynamic> sendDailyActivities({
+    List<String> activityKeys,
+    List<int> timeSpent,
+    int moodIndex,
+  }) async {
     var statuscode;
     var message;
     var rawBody = {};
@@ -117,7 +124,9 @@ mixin ChipModel on Model {
       rawBody[activityKeys[i]] = timeSpent[i];
     }
     rawBody["feeling"] = moodIndex;
-    var body = jsonEncode(rawBody);
+    var body = jsonEncode({
+      "activities": rawBody,
+    });
     var user = await Shared.getUserDetails();
     try {
       print("Sending get all acitivty Request!");
@@ -139,17 +148,16 @@ mixin ChipModel on Model {
         if (response.statusCode == 500 ||
             response.statusCode == 400 ||
             response.statusCode == 404) {
-          throw "Server Error!";
+          message = jsonDecode(response.body)["error"];
+          throw message;
         } else {
-          print("This wala error!");
-          message = jsonDecode(response.body)["message"];
-          // throw jsonDecode(response.body)["message"];
+          message = jsonDecode(response.body)["error"];
           throw message;
         }
       }
     } catch (err) {
       print("Error sending daily activities!....$err");
-      return {"code": statuscode, "message": err};
+      throw message;
     }
   }
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:parallax/screens/dialogFlow.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:toast/toast.dart';
 
-import 'package:parallax/widgets/dateWidget.dart';
-import 'package:parallax/widgets/activityWidget.dart';
-import 'package:parallax/widgets/articleWidget.dart';
+import '../scoped_models/mainModel.dart';
+import '../widgets/activityWidget.dart';
+import '../widgets/articleWidget.dart';
+import '../widgets/dateWidget.dart';
+import '../widgets/modalsecondPageRow.dart';
+import '../widgets/modalthirdPageRow.dart';
+import 'dialogFlow.dart';
+import 'messageList.dart';
 import 'profilePage.dart';
-import 'package:parallax/screens/messageList.dart';
-import 'package:parallax/widgets/modalsecondPageRow.dart';
-import 'package:parallax/widgets/modalthirdPageRow.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,38 +39,48 @@ class _HomePageState extends State<HomePage> {
   List<String> activities = [], activityKeys = [];
   List<int> timeSpent = [];
 
+  MainModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      model = ScopedModel.of(context);
+    });
+  }
+
   void updateActivites(String newActivity) {
     print("Adding: $newActivity");
     var activityKey = "";
-    if(newActivity == "Jogging") {
+    if (newActivity == "Jogging") {
       activityKey = "jogging";
-    } else if(newActivity == "Exercise") {
+    } else if (newActivity == "Exercise") {
       activityKey = "exercise";
-    } else if(newActivity == "Meditate") {
+    } else if (newActivity == "Meditate") {
       activityKey = "meditate";
-    } else if(newActivity == "Paint") {
+    } else if (newActivity == "Paint") {
       activityKey = "paint";
-    } else if(newActivity == "Read") {
+    } else if (newActivity == "Read") {
       activityKey = "read";
-    } else if(newActivity == "Code") {
+    } else if (newActivity == "Code") {
       activityKey = "code";
-    } else if(newActivity == "Video Games") {
+    } else if (newActivity == "Video Games") {
       activityKey = "games";
-    } else if(newActivity == "Socialize") {
+    } else if (newActivity == "Socialize") {
       activityKey = "socialize";
-    } else if(newActivity == "Social Media") {
+    } else if (newActivity == "Social Media") {
       activityKey = "socialMedia";
-    } else if(newActivity == "Good Sleep") {
+    } else if (newActivity == "Good Sleep") {
       activityKey = "goodSleep";
-    } else if(newActivity == "Moderate Sleep") {
+    } else if (newActivity == "Moderate Sleep") {
       activityKey = "moderateSleep";
-    } else if(newActivity == "Bad Sleep") {
+    } else if (newActivity == "Bad Sleep") {
       activityKey = "badSleep";
-    } else if(newActivity == "Streaming Platforms") {
+    } else if (newActivity == "Streaming Platforms") {
       activityKey = "netflix";
-    } else if(newActivity == "Smoking") {
+    } else if (newActivity == "Smoking") {
       activityKey = "smoke";
-    } else if(newActivity == "Junk Food") {
+    } else if (newActivity == "Junk Food") {
       activityKey = "junkFood";
     }
     setState(() {
@@ -76,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       timeSpent.add(0);
     });
     Navigator.pop(context);
-    _modalBottomSheetMenu();
+    _modalBottomSheetMenu(model);
   }
 
   void updateTimeSpent(int index, hours) {
@@ -91,7 +104,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget modalFirstSheetPage(double h) {
+  Widget modalFirstSheetPage(double h, MainModel model) {
     return Container(
       height: h,
       color: Colors.transparent,
@@ -138,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                           _moodIndex = 0;
                         });
                         Navigator.pop(context);
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         margin: EdgeInsets.all(10),
@@ -166,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                           _moodIndex = 1;
                         });
                         Navigator.pop(context);
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         margin: EdgeInsets.all(10),
@@ -194,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                           _moodIndex = 2;
                         });
                         Navigator.pop(context);
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         margin: EdgeInsets.all(10),
@@ -222,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                           _moodIndex = 3;
                         });
                         Navigator.pop(context);
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         margin: EdgeInsets.all(10),
@@ -250,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                           _moodIndex = 4;
                         });
                         Navigator.pop(context);
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         margin: EdgeInsets.all(10),
@@ -285,7 +298,7 @@ class _HomePageState extends State<HomePage> {
                           pageNumber = 2;
                         });
                         Navigator.of(context).pop();
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width - 80,
@@ -313,7 +326,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget modalSecondSheetPage(double h) {
+  Widget modalSecondSheetPage(double h, MainModel model) {
     return Container(
       height: h,
       color: Colors.transparent,
@@ -382,7 +395,7 @@ class _HomePageState extends State<HomePage> {
                           pageNumber = 3;
                         });
                         Navigator.of(context).pop();
-                        _modalBottomSheetMenu();
+                        _modalBottomSheetMenu(model);
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width - 80,
@@ -410,7 +423,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget modalThirdSheetPage(double h) {
+  Widget modalThirdSheetPage(double h, MainModel model) {
     return SingleChildScrollView(
       child: Container(
         //height: h,
@@ -458,10 +471,27 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       GestureDetector(
-                        onTap: () {
-                          print(_moodIndex);
-                          print(activities);
-                          print(timeSpent);
+                        onTap: () async {
+                          try {
+                            await model.sendDailyActivities(
+                                activityKeys: activityKeys,
+                                timeSpent: timeSpent,
+                                moodIndex: _moodIndex);
+                            Toast.show("Daily Activities Recorded!", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                            Navigator.pop(context);
+                          setState(() {
+                            pageNumber = 1;
+                          });
+                          } catch (err) {
+                            print(err);
+                            Toast.show(
+                                "Error Occured while recording your activities",
+                                context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width - 80,
@@ -475,9 +505,10 @@ class _HomePageState extends State<HomePage> {
                             "SUBMIT",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -490,21 +521,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _modalBottomSheetMenu() {
+  void _modalBottomSheetMenu(MainModel model) {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
           if (pageNumber == 1) {
-            return modalFirstSheetPage(330.0);
+            return modalFirstSheetPage(330.0, model);
           } else if (pageNumber == 2) {
             return modalSecondSheetPage(
-                MediaQuery.of(context).size.height * 0.7);
+                MediaQuery.of(context).size.height * 0.7, model);
           } else if (pageNumber == 3) {
             return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 1.2);
+                MediaQuery.of(context).size.height * 1.2, model);
           } else {
             return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 0.7);
+                MediaQuery.of(context).size.height * 0.7, model);
           }
           // return modalFirstSheetPage(240.0);
           // return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
@@ -517,108 +548,111 @@ class _HomePageState extends State<HomePage> {
       DateWidget(),
       ActivityWidget(),
     ];
-    arr.add(ArticleWidget());
+    //arr.add(ArticleWidget());
     return arr;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: Container(),
-        title: Text(
-          "Hello, Gagan",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.all(10),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(),
-                  ),
-                );
-              },
-              child: CircleAvatar(
-                backgroundColor: Colors.grey,
-              ),
-            ),
-          ),
-        ],
-        elevation: 0,
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext conext, Widget child, MainModel model) {
+      return Scaffold(
+        key: scaffoldKey,
         backgroundColor: Colors.white,
-      ),
-      // body: ListView(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(21),
-        // children: <Widget>[
-        child: Column(children: constructColumn()
-            // <Widget>[
-            //   DateWidget(),
-            //   ActivityWidget(),
-            // ].add(ArticleWidget()),
+        appBar: AppBar(
+          leading: Container(),
+          title: Text(
+            "Hello, Gagan",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          actions: <Widget>[
+            Container(
+              margin: EdgeInsets.all(10),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                ),
+              ),
             ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          margin: EdgeInsets.all(15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  child: IconButton(icon: Icon(Icons.home), onPressed: () {}),
-                ),
+          ],
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
+        // body: ListView(
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(21),
+          // children: <Widget>[
+          child: Column(children: constructColumn()
+              // <Widget>[
+              //   DateWidget(),
+              //   ActivityWidget(),
+              // ].add(ArticleWidget()),
               ),
-              Container(
-                child: IconButton(
-                  icon: Icon(Icons.people),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MessageList(),
-                      ),
-                    );
-                  },
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Container(
+            margin: EdgeInsets.all(15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    child: IconButton(icon: Icon(Icons.home), onPressed: () {}),
+                  ),
                 ),
-              ),
-              Container(
-                child: IconButton(
-                  icon: Icon(Icons.message),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePageDialogflow(),
-                      ),
-                    );
-                  },
+                Container(
+                  child: IconButton(
+                    icon: Icon(Icons.people),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MessageList(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  child: IconButton(
+                    icon: Icon(Icons.message),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePageDialogflow(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: showFab
-          ? FloatingActionButton(
-              backgroundColor: Colors.black,
-              onPressed: () {},
-              child: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  _modalBottomSheetMenu();
-                },
-                iconSize: 33,
-              ),
-            )
-          : Container(),
-    );
+        floatingActionButton: showFab
+            ? FloatingActionButton(
+                backgroundColor: Colors.black,
+                onPressed: () {},
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    _modalBottomSheetMenu(model);
+                  },
+                  iconSize: 33,
+                ),
+              )
+            : Container(),
+      );
+    });
   }
 }

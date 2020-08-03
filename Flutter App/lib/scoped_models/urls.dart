@@ -15,3 +15,4 @@ const url_getAllActivities="$baseUrl1/getSuggestions";
 const url_getArticles="$baseUrl1/getArticles";
 const url_getBaseArticles="$baseUrl/getArticles";
 const url_sendDailyActivites="$baseUrl/user/activity/submit";
+const url_getDailyActivites="$baseUrl/user/activity/daily";

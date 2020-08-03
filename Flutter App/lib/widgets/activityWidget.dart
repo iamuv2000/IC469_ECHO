@@ -9,21 +9,19 @@ class ActivityWidget extends StatefulWidget {
 }
 
 class _ActivityWidgetState extends State<ActivityWidget> {
-
-  List<dynamic> chipTitles=[];
+  List<dynamic> chipTitles = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    final MainModel model=MainModel();
+    final MainModel model = MainModel();
     initializePage(model);
   }
 
   void initializePage(MainModel model) async {
-    var a= await model.getAllAcitivityForHomePage();
+    var a = await model.getAllAcitivityForHomePage();
     setState(() {
-      chipTitles=a;
+      chipTitles = a;
     });
     // print(a);
     // print(a.runtimeType);
@@ -35,13 +33,19 @@ class _ActivityWidgetState extends State<ActivityWidget> {
     // print(data1);
   }
 
-  List<Widget> buildActivityCards(){
-    List<Widget> arr=[];
-    var a=chipTitles.map((data){
-      return arr.add(ActivityCard(title: data,));
-    });
-    print(a);
-    print(arr);
+  List<Widget> buildActivityCards() {
+    List<Widget> arr = [];
+    var a = chipTitles.map(
+      (data) {
+        return arr.add(
+          ActivityCard(
+            title: data.toLowerCase(),
+          ),
+        );
+      },
+    );
+    //print(a);
+    //print(arr);
     return arr;
   }
 
@@ -54,10 +58,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         children: <Widget>[
           Text(
             "You might love doing these today!",
-            style: TextStyle(
-              fontSize: 17.7,
-              fontWeight: FontWeight.w800
-            ),
+            style: TextStyle(fontSize: 17.7, fontWeight: FontWeight.w800),
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
@@ -66,15 +67,13 @@ class _ActivityWidgetState extends State<ActivityWidget> {
               // runAlignment: WrapAlignment.center,
               // textDirection: TextDirection.ltr,
               alignment: WrapAlignment.center,
-              children: chipTitles!=[]
-              ?
-              buildActivityCards()
-              :
-              Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
+              children: chipTitles != []
+                  ? buildActivityCards()
+                  : Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
               // <Widget>[
               //   ActivityCard(title: "Jogging",),
               //   ActivityCard(title: "Frogging",),
