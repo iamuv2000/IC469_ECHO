@@ -1,11 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-import 'package:parallax/screens/chatScreen.dart';
-import 'package:parallax/scoped_models/mainModel.dart';
-import 'package:parallax/scoped_models/shared.dart';
-import 'package:parallax/models/user.dart';
+import '../screens/commentsPage.dart';
 
 class MessageCard extends StatelessWidget {
 
@@ -15,11 +9,16 @@ class MessageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) =>  CommentsPage(postId : message["_id"])));
+      },
+      child: Card(
         // color: Colors.black,
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15)
+            borderRadius: BorderRadius.circular(15)
         ),
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         // shape: ,
@@ -47,8 +46,8 @@ class MessageCard extends StatelessWidget {
                               Text(
                                 message['isAnonymous'] ? "Anonymous Ant" : "Human",
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
                                 ),
                               ),
                               Container(
@@ -69,10 +68,10 @@ class MessageCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(left: 10),
                             child: Text(
-                                message['story'],
+                              message['story'],
                               style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500
                               ),
                             ),
                           ),
@@ -81,7 +80,7 @@ class MessageCard extends StatelessWidget {
                     ],
                   ),
                 ),
-               GestureDetector(
+                GestureDetector(
 //                 onTap: () async {
 //                   var a=Shared.getUserDetails();
 //                  //  print(a);
@@ -95,25 +94,26 @@ class MessageCard extends StatelessWidget {
 //                    user=data;
 //                   });
 //                 },
-                child: Container(
-                   margin: EdgeInsets.only(top: 10),
-                   padding: EdgeInsets.symmetric(vertical: 10),
-                   width: double.infinity,
-                  child: Text(
-                    "Message ${message["isAnonymous"] ? "Anonymous Ant" : "Human"}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    width: double.infinity,
+                    child: Text(
+                      "Message ${message["isAnonymous"] ? "Anonymous Ant" : "Human"}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600
+                      ),
                     ),
+                    color: Colors.orange,
                   ),
-                  color: Colors.orange,
-                 ),
-               ),
+                ),
               ],
             ),
           ),
         ),
+      ),
     );
   }
 }
