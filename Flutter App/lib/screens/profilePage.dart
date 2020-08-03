@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'addMentor.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -16,7 +18,6 @@ class _ProfilePageState extends State<ProfilePage>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,12 @@ class _ProfilePageState extends State<ProfilePage>
             margin: EdgeInsets.all(10),
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddMentor(),
+                  ),
+                );
               },
               child: Icon(
                 Icons.settings,
@@ -112,19 +118,17 @@ class _ProfilePageState extends State<ProfilePage>
               controller: _tabController,
               tabs: [
                 Tab(
-                    child:Text(
-                        'Stories',
-                style:
-                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                    )
-                ),
+                    child: Text(
+                  'Stories',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                )),
                 Tab(
-                    child:Text(
-                      'Stats',
-                      style:
-                      TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                    )
-                ),
+                    child: Text(
+                  'Stats',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                )),
               ],
             ),
           ),
@@ -141,7 +145,9 @@ class _ProfilePageState extends State<ProfilePage>
                         child: Column(
                           children: <Widget>[
                             ListTile(
-                              leading: CircleAvatar(radius: 16,),
+                              leading: CircleAvatar(
+                                radius: 16,
+                              ),
                               title: Text('Posted Anonymously'),
                               subtitle: Text('A month ago.'),
                               trailing: Icon(Icons.more_vert),
@@ -163,7 +169,9 @@ class _ProfilePageState extends State<ProfilePage>
                         child: Column(
                           children: <Widget>[
                             ListTile(
-                              leading: CircleAvatar(radius: 16,),
+                              leading: CircleAvatar(
+                                radius: 16,
+                              ),
                               title: Text('Posted Anonymously'),
                               subtitle: Text('A month ago.'),
                               trailing: Icon(Icons.more_vert),
@@ -185,7 +193,9 @@ class _ProfilePageState extends State<ProfilePage>
                         child: Column(
                           children: <Widget>[
                             ListTile(
-                              leading: CircleAvatar(radius: 16,),
+                              leading: CircleAvatar(
+                                radius: 16,
+                              ),
                               title: Text('Posted Anonymously'),
                               subtitle: Text('A month ago.'),
                               trailing: Icon(Icons.more_vert),

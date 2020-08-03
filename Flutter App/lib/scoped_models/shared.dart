@@ -35,4 +35,12 @@ class Shared {
       return;
     }
   }
+
+  static void setDoctorEmail(String email) {
+    pref.setString('doctorEmail', email);
+  }
+  
+  static Future<String> getDoctorEmail() {
+    return Future.value(pref.getString('doctorEmail'));
+  }
 }

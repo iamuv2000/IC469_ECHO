@@ -44,8 +44,8 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         );
       },
     );
-    //print(a);
-    //print(arr);
+    print(a);
+    print(arr);
     return arr;
   }
 

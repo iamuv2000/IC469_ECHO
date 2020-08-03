@@ -46,4 +46,12 @@ class Shared {
   static Future<String> getLastSaved() {
     return Future.value(prefs.getString('lastSaved'));
   }
+
+  static void setDoctorEmail(String email) {
+    prefs.setString('doctorEmail', email);
+  }
+  
+  static Future<String> getDoctorEmail() {
+    return Future.value(prefs.getString('doctorEmail'));
+  }
 }
