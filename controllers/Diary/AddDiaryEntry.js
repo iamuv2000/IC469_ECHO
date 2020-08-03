@@ -1,5 +1,8 @@
+/* eslint-disable prefer-promise-reject-errors */
 const responses = require('../../configs/responses.js')
 const Diary = require('../../models/Diary.js')
+const User = require('../../models/User.js')
+const DiaryEmail = require('../../controllers/EmailAPI/DiaryEmail.js')
 
 const AddDiaryEntry = (uid, entry) => {
   return new Promise((resolve, reject) => {
@@ -17,10 +20,15 @@ const AddDiaryEntry = (uid, entry) => {
           },
           error: null
         })
+        return User.findOne({ uid })
+      })
+      .then((userInstance) => userInstance.toObject())
+      .then((user) => {
+        DiaryEmail(user.name, user.email, user.guideEmail, entry)
       })
       .catch((err) => {
         console.log(err.message)
-        resolve({
+        reject({
           statusCode: 500,
           serverMessage: responses['500'],
           payload: {
