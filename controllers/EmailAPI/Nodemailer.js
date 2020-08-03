@@ -1,6 +1,7 @@
 const nodeMailer = require('nodemailer')
+const fs = require('fs')
 
-const Nodemailer = (emails, html, sender, subject, nameOfEmail) => {
+const Nodemailer = (emails, html, sender, subject, nameOfEmail, attachment = null) => {
   return new Promise((resolve, reject) => {
     try {
       const transporter = nodeMailer.createTransport({
@@ -20,6 +21,7 @@ const Nodemailer = (emails, html, sender, subject, nameOfEmail) => {
         to: emails,
         subject: subject,
         html: html,
+        attachments: attachment !== null ? [{ filename: attachment.fileName, content: fs.createReadStream(attachment.filePath) }] : null,
         dsn: {
           id: 'some random message specific id',
           return: 'headers',
