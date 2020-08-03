@@ -11,6 +11,10 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+FirebaseUser loggedInUser;
+
+
 class MessageList extends StatefulWidget {
   @override
   _MessageListState createState() => _MessageListState();
@@ -20,17 +24,18 @@ class _MessageListState extends State<MessageList> {
   var messages = null;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final postController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   Future<http.Response> submitPost() {
     return http.post(
       'https://echo-cbt-server.herokuapp.com/user/create_story',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
+        'Authorization': 'Bearer ${loggedInUser.uid}'
       },
       body: jsonEncode(<String, String>{
         'story': postController.text,
-        'isAnonymous': "isChecked.toString()"
+        'isAnonymous': isChecked.toString()
       }),
     );
   }
@@ -39,14 +44,28 @@ class _MessageListState extends State<MessageList> {
     return http.get('https://echo-cbt-server.herokuapp.com/user/stories',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
+          'Authorization': 'Bearer ${loggedInUser.uid}'
         });
+  }
+
+  void getCurrentUser () async {
+    try{
+      final user = await _auth.currentUser();
+      if(user!=null){
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    }
+    catch(e){
+      print(e);
+    }
   }
 
   @override
   void initState() {
     super.initState();
     _initializePage();
+    getCurrentUser();
   }
 
   void _initializePage() async {
@@ -68,26 +87,6 @@ class _MessageListState extends State<MessageList> {
     });
   }
 
-  List<Widget> _buildAppBarActionButtons() {
-    return <Widget>[
-      Container(
-        child: IconButton(
-            icon: Icon(
-              Icons.bookmark,
-              size: 30,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ChatList(),
-                ),
-              );
-            }),
-      ),
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
@@ -102,9 +101,7 @@ class _MessageListState extends State<MessageList> {
                 color: Colors.black,
               ),
             ),
-            actions: _buildAppBarActionButtons(),
             backgroundColor: Colors.white,
-            leading: Container(),
           ),
           body: messages == null
               ? Container(

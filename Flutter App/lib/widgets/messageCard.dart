@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import '../screens/commentsPage.dart';
+import 'package:random_color/random_color.dart';
+
+
 
 class MessageCard extends StatelessWidget {
 
   var message;
 
   MessageCard({this.message});
+
+  static RandomColor randomColor = RandomColor();
+  Color _color = randomColor.randomColor(
+      colorSaturation: ColorSaturation.highSaturation,
+      colorHue: ColorHue.orange
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,13 @@ class MessageCard extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           CircleAvatar(
-                            backgroundColor: Colors.grey,
+                            backgroundColor: _color,
+                            child: Text(
+                                message['isAnonymous'] ? "A" : "H",
+                              style: TextStyle(
+                                color: Colors.white
+                              )
+                            ),
                           ),
                           SizedBox(
                             width: 25,
@@ -81,19 +96,6 @@ class MessageCard extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-//                 onTap: () async {
-//                   var a=Shared.getUserDetails();
-//                  //  print(a);
-//                  dynamic user;
-//                  await a.then((data){
-//                    //  print(data);
-//                    //  print(data.runtimeType);
-//                    //  print(jsonDecode(data));
-//                    print("Something!");
-//                    print(data.runtimeType);
-//                    user=data;
-//                   });
-//                 },
                   child: Container(
                     margin: EdgeInsets.only(top: 10),
                     padding: EdgeInsets.symmetric(vertical: 10),
@@ -106,7 +108,7 @@ class MessageCard extends StatelessWidget {
                           fontWeight: FontWeight.w600
                       ),
                     ),
-                    color: Colors.orange,
+                    color: _color,
                   ),
                 ),
               ],
