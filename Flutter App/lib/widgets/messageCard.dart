@@ -4,11 +4,16 @@ import 'package:random_color/random_color.dart';
 
 
 
-class MessageCard extends StatelessWidget {
+class MessageCard extends StatefulWidget {
 
   var message;
-
   MessageCard({this.message});
+
+  @override
+  _MessageCardState createState() => _MessageCardState();
+}
+
+class _MessageCardState extends State<MessageCard> {
 
   static RandomColor randomColor = RandomColor();
   Color _color = randomColor.randomColor(
@@ -17,11 +22,14 @@ class MessageCard extends StatelessWidget {
   );
 
   @override
+  void initState() {
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) =>  CommentsPage(postId : message["_id"])));
+            MaterialPageRoute(builder: (context) =>  CommentsPage(postId : widget.message["_id"])));
       },
       child: Card(
         // color: Colors.black,
@@ -46,7 +54,7 @@ class MessageCard extends StatelessWidget {
                           CircleAvatar(
                             backgroundColor: _color,
                             child: Text(
-                                message['isAnonymous'] ? "A" : "H",
+                                widget.message['name'][0],
                               style: TextStyle(
                                 color: Colors.white
                               )
@@ -59,18 +67,18 @@ class MessageCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                message['isAnonymous'] ? "Anonymous Ant" : "Human",
+                                widget.message['name'],
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(left: 25),
-                                child: Text(
-                                  "10 hours ago",
-                                ),
-                              ),
+//                              Container(
+//                                margin: EdgeInsets.only(left: 25),
+//                                child: Text(
+//                                    difference.toString()
+//                                ),
+//                              ),
                             ],
                           )
                         ],
@@ -83,7 +91,7 @@ class MessageCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(left: 10),
                             child: Text(
-                              message['story'],
+                              widget.message['story'],
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500
@@ -101,7 +109,7 @@ class MessageCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 10),
                     width: double.infinity,
                     child: Text(
-                      "Message ${message["isAnonymous"] ? "Anonymous Ant" : "Human"}",
+                      "Message ${widget.message["name"]}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
