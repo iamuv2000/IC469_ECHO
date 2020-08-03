@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:parallax/models/user.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:parallax/models/postModel.dart';
 import 'package:parallax/screens/chatList.dart';
@@ -6,13 +12,10 @@ import 'package:parallax/screens/dialogFlow.dart';
 import 'package:parallax/widgets/messageCard.dart';
 import 'package:parallax/scoped_models/mainModel.dart';
 import 'package:parallax/screens/homePage.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:parallax/scoped_models/shared.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
-FirebaseUser loggedInUser;
+User loggedInUser;
 
 
 class MessageList extends StatefulWidget {
@@ -48,9 +51,9 @@ class _MessageListState extends State<MessageList> {
         });
   }
 
-  void getCurrentUser () async {
+  void getCurrentUser() async {
     try{
-      final user = await _auth.currentUser();
+      final user = await Shared.getUserDetails();
       if(user!=null){
         loggedInUser = user;
         print(loggedInUser.email);

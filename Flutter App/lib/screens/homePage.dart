@@ -531,24 +531,25 @@ class _HomePageState extends State<HomePage> {
 
   void _modalBottomSheetMenu(MainModel model) {
     showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          if (pageNumber == 1) {
-            return modalFirstSheetPage(330.0, model);
-          } else if (pageNumber == 2) {
-            return modalSecondSheetPage(
-                MediaQuery.of(context).size.height * 0.7, model);
-          } else if (pageNumber == 3) {
-            return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 1.2, model);
-          } else {
-            return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 0.7, model);
-          }
-          // return modalFirstSheetPage(240.0);
-          // return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
-          // return modalThirdSheetPage(MediaQuery.of(context).size.height*0.7);
-        });
+      context: context,
+      builder: (builder) {
+        if (pageNumber == 1) {
+          return modalFirstSheetPage(330.0, model);
+        } else if (pageNumber == 2) {
+          return modalSecondSheetPage(
+              MediaQuery.of(context).size.height * 0.7, model);
+        } else if (pageNumber == 3) {
+          return modalThirdSheetPage(
+              MediaQuery.of(context).size.height * 1.2, model);
+        } else {
+          return modalThirdSheetPage(
+              MediaQuery.of(context).size.height * 0.7, model);
+        }
+        // return modalFirstSheetPage(240.0);
+        // return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
+        // return modalThirdSheetPage(MediaQuery.of(context).size.height*0.7);
+      },
+    );
   }
 
   List<Widget> constructColumn() {
@@ -558,7 +559,11 @@ class _HomePageState extends State<HomePage> {
         setSuggActivites: setSuggActivites,
       ),
     ];
-    arr.add(ArticleWidget(suggActivites: suggActivites));
+    arr.add(
+      ArticleWidget(
+        suggActivites: suggActivites,
+      ),
+    );
     return arr;
   }
 
