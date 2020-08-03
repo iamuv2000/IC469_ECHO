@@ -14,7 +14,7 @@ const FetchDailyActivity = (uid) => {
             statusCode: 200,
             serverMessage: responses['200'],
             payload: {
-              activities: [],
+              activities: ['socialize', 'meditate', 'exercise'],
               hasEnoughRecords: false
             },
             error: null

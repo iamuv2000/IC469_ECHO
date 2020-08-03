@@ -3,3 +3,4 @@ flask
 pandas
 sklearn
 numpy
+stanford_openie
