@@ -1,11 +1,22 @@
 /* eslint-disable prefer-promise-reject-errors */
 const Story = require('../../models/Story.js')
+const User = require('../../models/User.js')
 const responses = require('../../configs/responses.js')
 
 const CreateStoryHandler = (uid, s) => {
   return new Promise((resolve, reject) => {
-    const story = new Story({ uid, story: s.body, isAnonymous: s.isAnonymous, date: Date.now() })
-    story.save()
+    User.findOne({ uid })
+      .then((userInstance) => userInstance.toObject())
+      .then((user) => {
+        const story = new Story({
+          uid,
+          name: s.isAnonymous === 'true' ? 'Anonymous' : user.name,
+          story: s.body,
+          isAnonymous: s.isAnonymous,
+          date: Date.now()
+        })
+        return story.save()
+      })
       .then(() => resolve({
         statusCode: 201,
         serverMessage: responses['201'],

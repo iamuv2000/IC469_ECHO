@@ -7,6 +7,10 @@ const StorySchema = mongoose.Schema({
     type: String,
     required: true
   },
+  name: {
+    type: String,
+    required: false
+  },
   date: {
     type: Date,
     required: true
