@@ -39,6 +39,8 @@ class _HomePageState extends State<HomePage> {
   List<String> activities = [], activityKeys = [];
   List<int> timeSpent = [];
 
+  dynamic suggActivites = [];
+
   MainModel model;
 
   @override
@@ -46,6 +48,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     setState(() {
       model = ScopedModel.of(context);
+    });
+  }
+
+  void setSuggActivites(dynamic a) {
+    setState(() {
+      suggActivites = a;
     });
   }
 
@@ -481,9 +489,9 @@ class _HomePageState extends State<HomePage> {
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.BOTTOM);
                             Navigator.pop(context);
-                          setState(() {
-                            pageNumber = 1;
-                          });
+                            setState(() {
+                              pageNumber = 1;
+                            });
                           } catch (err) {
                             print(err);
                             Toast.show(
@@ -546,9 +554,11 @@ class _HomePageState extends State<HomePage> {
   List<Widget> constructColumn() {
     var arr = <Widget>[
       DateWidget(),
-      ActivityWidget(),
+      ActivityWidget(
+        setSuggActivites: setSuggActivites,
+      ),
     ];
-    //arr.add(ArticleWidget());
+    arr.add(ArticleWidget(suggActivites: suggActivites));
     return arr;
   }
 

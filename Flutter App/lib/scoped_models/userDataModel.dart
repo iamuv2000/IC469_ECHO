@@ -275,4 +275,45 @@ mixin ChipModel on Model {
       throw message;
     }
   }
+
+  Future<dynamic> getAllArticles(dynamic activites) async {
+    var message;
+    var body;
+    body = jsonEncode({
+      "activities": activites,
+    });
+    try {
+      print("Sending get articles Request!");
+      var user = await Shared.getUserDetails();
+      http.Response response = await http.post(
+        url_getAllArticles,
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + user.uid,
+        },
+        body: body,
+      );
+      print("Response for get articles request:");
+      print(response.statusCode);
+      print(response.body);
+      if (response.statusCode == 200) {
+        print(body);
+        print(jsonDecode(response.body)["payload"]["articles"]);
+        return jsonDecode(response.body)["payload"]["articles"];
+      } else {
+        if (response.statusCode == 500 ||
+            response.statusCode == 400 ||
+            response.statusCode == 404) {
+          message = jsonDecode(response.body)["error"];
+          throw message;
+        } else {
+          message = jsonDecode(response.body)["error"];
+          throw message;
+        }
+      }
+    } catch (err) {
+      print("Error getting articles!....$err");
+      throw message;
+    }
+  }
 }
