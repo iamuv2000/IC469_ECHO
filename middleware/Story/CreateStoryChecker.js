@@ -1,12 +1,13 @@
 const responses = require('../../configs/responses.js')
 
 const CreateStoryChecker = (req, res, next) => {
-  const allGood = req.body.story
+  const allGood = req.body.story && req.body.isAnonymous
   if (allGood) {
     req.story = {
       body: req.body.story,
-      isAnonymous: req.body.isAnonymous === false ? req.body.isAnonymous : true
+      isAnonymous: req.body.isAnonymous
     }
+    console.log(req.story)
     return next()
   }
   res.status(400).send({

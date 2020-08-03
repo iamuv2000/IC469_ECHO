@@ -11,7 +11,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class MessageList extends StatefulWidget {
   @override
   _MessageListState createState() => _MessageListState();
@@ -27,21 +26,20 @@ class _MessageListState extends State<MessageList> {
       'https://echo-cbt-server.herokuapp.com/user/create_story',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Bearer' : ''
+        'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
       },
       body: jsonEncode(<String, String>{
         'story': postController.text,
-        'isAnonymous': "true"
+        'isAnonymous': "isChecked.toString()"
       }),
     );
   }
 
   Future<http.Response> getAllPosts() {
-    return  http.post(
-        'https://echo-cbt-server.herokuapp.com/user/stories',
+    return http.get('https://echo-cbt-server.herokuapp.com/user/stories',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Bearer' : ''
+          'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
         });
   }
 
@@ -53,12 +51,21 @@ class _MessageListState extends State<MessageList> {
 
   void _initializePage() async {
     print("FETCHING ARTICLES!");
-    var allPosts  = await getAllPosts();
-    print(allPosts.body);
+    var allPosts = await getAllPosts();
+    final parsed = jsonDecode(allPosts.body);
+    print(parsed['payload']['stories']);
 //    var a = await model.getAllPosts();
-//    setState(() {
-//      messages = PostsModel.fromJson(a["payload"]["posts"]).posts;
-//    });
+    setState(() {
+      messages = parsed['payload']['stories'];
+    });
+  }
+
+  bool isChecked = false;
+
+  Future<Null> updated(StateSetter updateState) async {
+    updateState(() {
+      isChecked = !isChecked;
+    });
   }
 
   List<Widget> _buildAppBarActionButtons() {
@@ -107,21 +114,11 @@ class _MessageListState extends State<MessageList> {
                 )
               : ListView.builder(
                   itemCount: messages.length,
-                  // itemCount: 1,
                   padding: EdgeInsets.all(0),
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (context, index) {
+                    final item = messages[index];
                     return Container(
-                      // child: Text("2"),
-                      child:
-                          MessageCard(message: messages[index], model: model),
-                      // child: MessageCard(PostModel(
-                      //   description: "Somenhting",
-                      //   isAno: true,
-                      //   messageId: "Somehitng",
-                      //   timeStamp: "Somebgujrng",
-                      //   title: "SOmelfn",
-                      //   uid: "asdlandjk"
-                      // )),
+                      child: MessageCard(message: item),
                     );
                   }),
           bottomNavigationBar: BottomAppBar(
@@ -188,84 +185,107 @@ class _MessageListState extends State<MessageList> {
             backgroundColor: Colors.black,
             child: IconButton(
                 icon: Icon(
-                  Icons.note_add,
+                  Icons.edit,
                   color: Colors.white,
                   size: 33,
                 ),
                 onPressed: () {
-                  scaffoldKey.currentState
-                      .showBottomSheet((context) => Expanded(
-                        child: Container(
-                              height: MediaQuery.of(context).size.width * 0.65,
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
+                  showModalBottomSheet<void>(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, state) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height / 2 +
+                                MediaQuery.of(context).viewInsets.bottom,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        "Create a new post",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Icon(Icons.close,
+                                            color: Colors.black, size: 20),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: TextField(
+                                          controller: postController,
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: null,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Checkbox(
+                                        value: isChecked,
+                                        onChanged: (bool value) {
+                                          updated(state);
+                                        },
+                                        activeColor: Colors.pink,
+                                        checkColor: Colors.white,
+                                        tristate: false,
+                                      ),
+                                      Text("Check to post anonymously")
+                                    ],
+                                  ),
+                                ),
+                                Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        Text(
-                                          "Create a new post",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w800),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
+                                        Expanded(
+                                            child: RaisedButton(
+                                          onPressed: () async {
+                                            var result = await submitPost();
+                                            print(result.body);
+                                            _initializePage();
                                             Navigator.pop(context);
                                           },
-                                          child: Icon(Icons.close,
-                                              color: Colors.black, size: 20),
-                                        ),
+                                          padding: EdgeInsets.all(10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          elevation: 0.5,
+                                          color: Colors.lightBlueAccent,
+                                          child: const Text(
+                                            'Post',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white),
+                                          ),
+                                        ))
                                       ],
-                                    ),
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: TextField(
-                                              controller: postController,
-                                              keyboardType: TextInputType.multiline,
-                                              maxLines: null,
-                                            ),
-                                          )
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: RaisedButton(
-                                              onPressed:  () async{
-                                                var result = await submitPost();
-                                                print(result.body);
-                                              },
-                                              padding: EdgeInsets.all(10),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(8.0),
-                                              ),
-                                              elevation: 0.5,
-                                              color: Colors.lightBlueAccent,
-                                              child: const Text(
-                                                  'Post',
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                    color: Colors.white
-                                                  ),
-                                              ),
-                                            )
-                                          )
-                                        ],
-                                      ))
-
-                                ],
-                              ),
+                                    ))
+                              ],
                             ),
-                      ));
+                          );
+                        });
+                      });
                 }),
           ),
         );

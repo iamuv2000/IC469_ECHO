@@ -3,7 +3,7 @@ const CheckSubmitActivity = require('../../middleware/Activity/CheckSubmitActivi
 const SubmitActivityHandler = require('../../controllers/Activity/SubmitActivityHandler.js')
 
 route.post('/user/activity/submit', CheckSubmitActivity, (req, res) => {
-  SubmitActivityHandler(req.activity, req.submittedActivities)
+  SubmitActivityHandler(req.uid, req.activity, req.submittedActivities)
     .then((resp) => res.status(resp.statusCode).send(resp))
     .catch((err) => res.status(err.statusCode).send(err))
 })

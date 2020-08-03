@@ -1,14 +1,17 @@
 /* eslint-disable prefer-promise-reject-errors */
 const responses = require('../../configs/responses.js')
+const User = require('../../models/User.js')
+const ActivityEmail = require('../../controllers/EmailAPI/ActivityEmail.js')
 
-const SubmitActivityHandler = (activity, submittedActivities) => {
+const SubmitActivityHandler = (uid, activity, submittedActivities) => {
   return new Promise((resolve, reject) => {
     Promise.all([
       activity.toObject().userActivities,
       activity.toObject().activityRecords.length,
-      Object.keys(submittedActivities)
+      Object.keys(submittedActivities),
+      User.findOne({ uid })
     ])
-      .then(([userActivities, recordLength, submittedActivitiesKeys]) => {
+      .then(([userActivities, recordLength, submittedActivitiesKeys, userInstance]) => {
         activity.activityRecords = [...activity.activityRecords, new Map()]
         userActivities.forEach((a) => {
           if (submittedActivitiesKeys.includes(a)) {
@@ -17,6 +20,12 @@ const SubmitActivityHandler = (activity, submittedActivities) => {
             activity.activityRecords[recordLength].set(a, 0)
           }
         })
+        ActivityEmail(
+          userInstance.name,
+          userInstance.email,
+          userInstance.guideEmail,
+          activity.activityRecords[recordLength]
+        )
         activity.save()
         resolve({
           statusCode: 200,

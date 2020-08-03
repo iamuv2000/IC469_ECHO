@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const CommentSchema = require('./CommentSchema.js')
 const logger = require('../controllers/logger.js')
 
 const StorySchema = mongoose.Schema({
@@ -19,6 +20,9 @@ const StorySchema = mongoose.Schema({
     required: true,
     trim: true,
     maxlength: [500, 'Your story can have maximum of 500 characters!']
+  },
+  comments: {
+    type: [CommentSchema]
   }
 })
 
