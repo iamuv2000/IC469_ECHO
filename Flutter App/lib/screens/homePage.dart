@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:toast/toast.dart';
 
 import '../scoped_models/mainModel.dart';
+import '../scoped_models/shared.dart';
 import '../widgets/activityWidget.dart';
 import '../widgets/articleWidget.dart';
 import '../widgets/dateWidget.dart';
@@ -30,14 +31,17 @@ class _HomePageState extends State<HomePage> {
   //   });
   // }
 
-  bool showFab = true;
+  bool showFab = true, loading = true;
 
   double _height = 240.0;
 
   int pageNumber = 1, _moodIndex = -1;
+  String name = 'friend';
 
   List<String> activities = [], activityKeys = [];
   List<int> timeSpent = [];
+
+  dynamic suggActivites = [];
 
   MainModel model;
 
@@ -46,6 +50,36 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     setState(() {
       model = ScopedModel.of(context);
+    });
+    _initializePage();
+  }
+
+  void _initializePage() async {
+    setState(() {
+      loading = true;
+    });
+    await getCurrentUser();
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<void> getCurrentUser() async {
+    try {
+      final user = await Shared.getUserDetails();
+      if (user != null) {
+        setState(() {
+          name = user.name;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void setSuggActivites(dynamic a) {
+    setState(() {
+      suggActivites = a;
     });
   }
 
@@ -481,9 +515,9 @@ class _HomePageState extends State<HomePage> {
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.BOTTOM);
                             Navigator.pop(context);
-                          setState(() {
-                            pageNumber = 1;
-                          });
+                            setState(() {
+                              pageNumber = 1;
+                            });
                           } catch (err) {
                             print(err);
                             Toast.show(
@@ -523,32 +557,39 @@ class _HomePageState extends State<HomePage> {
 
   void _modalBottomSheetMenu(MainModel model) {
     showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          if (pageNumber == 1) {
-            return modalFirstSheetPage(330.0, model);
-          } else if (pageNumber == 2) {
-            return modalSecondSheetPage(
-                MediaQuery.of(context).size.height * 0.7, model);
-          } else if (pageNumber == 3) {
-            return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 1.2, model);
-          } else {
-            return modalThirdSheetPage(
-                MediaQuery.of(context).size.height * 0.7, model);
-          }
-          // return modalFirstSheetPage(240.0);
-          // return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
-          // return modalThirdSheetPage(MediaQuery.of(context).size.height*0.7);
-        });
+      context: context,
+      builder: (builder) {
+        if (pageNumber == 1) {
+          return modalFirstSheetPage(330.0, model);
+        } else if (pageNumber == 2) {
+          return modalSecondSheetPage(
+              MediaQuery.of(context).size.height * 0.7, model);
+        } else if (pageNumber == 3) {
+          return modalThirdSheetPage(
+              MediaQuery.of(context).size.height * 1.2, model);
+        } else {
+          return modalThirdSheetPage(
+              MediaQuery.of(context).size.height * 0.7, model);
+        }
+        // return modalFirstSheetPage(240.0);
+        // return modalSecondSheetPage(MediaQuery.of(context).size.height*0.7);
+        // return modalThirdSheetPage(MediaQuery.of(context).size.height*0.7);
+      },
+    );
   }
 
   List<Widget> constructColumn() {
     var arr = <Widget>[
       DateWidget(),
-      ActivityWidget(),
+      ActivityWidget(
+        setSuggActivites: setSuggActivites,
+      ),
     ];
-    //arr.add(ArticleWidget());
+    arr.add(
+      ArticleWidget(
+        suggActivites: suggActivites,
+      ),
+    );
     return arr;
   }
 
@@ -562,7 +603,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           leading: Container(),
           title: Text(
-            "Hello, Gagan",
+            "Hello, " + name,
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           actions: <Widget>[
@@ -578,7 +619,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
                 child: CircleAvatar(
-                  backgroundColor: Colors.grey,
+                  backgroundColor: Colors.purple,
+                  child: Text('I'),
                 ),
               ),
             ),
@@ -587,7 +629,15 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
         ),
         // body: ListView(
-        body: SingleChildScrollView(
+        body: 
+          loading
+              ? Center(
+                  child: Container(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              :
+            SingleChildScrollView(
           padding: EdgeInsets.all(21),
           // children: <Widget>[
           child: Column(children: constructColumn()

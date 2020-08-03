@@ -4,6 +4,13 @@ import 'package:parallax/widgets/activityCard.dart';
 import 'package:parallax/scoped_models/mainModel.dart';
 
 class ActivityWidget extends StatefulWidget {
+
+  const ActivityWidget({
+    @required this.setSuggActivites,
+  });
+  
+  final Function setSuggActivites;
+
   @override
   _ActivityWidgetState createState() => _ActivityWidgetState();
 }
@@ -20,6 +27,7 @@ class _ActivityWidgetState extends State<ActivityWidget> {
 
   void initializePage(MainModel model) async {
     var a = await model.getAllAcitivityForHomePage();
+    widget.setSuggActivites(a);
     setState(() {
       chipTitles = a;
     });
@@ -44,8 +52,8 @@ class _ActivityWidgetState extends State<ActivityWidget> {
         );
       },
     );
-    //print(a);
-    //print(arr);
+    print(a);
+    print(arr);
     return arr;
   }
 

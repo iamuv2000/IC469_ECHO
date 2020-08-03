@@ -13,18 +13,11 @@ class DateWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          IconButton(
-            onPressed: (){},
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "22 Feb, 2020",
+                "3 Aug, 2020",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -40,13 +33,6 @@ class DateWidget extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          IconButton(
-            onPressed: (){},
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-            ),
           ),
         ],
       ),

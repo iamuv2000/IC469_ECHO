@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "173396830005-u4nv5prhpi5962t1dcv6qi5gu79m6e14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parallax",
+            "certificate_hash": "6184545346d43058681ad11054cb08a30d230cd4"
+          }
+        },
+        {
           "client_id": "173396830005-5ed78lmd1ijlc9ponqi1bdbijqrdgg0n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

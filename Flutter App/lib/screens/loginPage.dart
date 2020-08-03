@@ -16,9 +16,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool loading = false;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print("Shared preferences initializing!");
     Shared.initialize();
@@ -28,6 +29,9 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<String> signInWithGoogle(MainModel model) async {
+    setState(() {
+      loading = true;
+    });
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount.authentication;
@@ -76,9 +80,9 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
             );
-          } catch(err) {
-          Toast.show("Login Error!", context,
-              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          } catch (err) {
+            Toast.show("Login Error!", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
           }
         } else {
           Toast.show("Login Error!", context,
@@ -104,6 +108,9 @@ class _LoginPageState extends State<LoginPage> {
     // print(user.runtimeType);
     // print('User Email: '+user.email);
     // return 'signInWithGoogle succeeded: $user';
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -111,52 +118,91 @@ class _LoginPageState extends State<LoginPage> {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
-          body: Container(
-            color: Colors.white,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlutterLogo(size: 150),
-                  SizedBox(height: 50),
-                  _signInButton(model),
-                ],
-              ),
-            ),
-          ),
+          body: loading
+              ? Center(
+                  child: Container(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.black,
+                          child: Image(
+                              image: AssetImage(
+                                "images/support.png",
+                              ),
+                              height: 100,
+                              width: 100),
+                        ),
+                        SizedBox(height: 40),
+                        Text(
+                          'ECHO',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 54,
+                            fontWeight: FontWeight.w800,
+                            wordSpacing: 18,
+                            letterSpacing: 5.1,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        _signInButton(model),
+                      ],
+                    ),
+                  ),
+                ),
         );
       },
     );
   }
 
   Widget _signInButton(MainModel model) {
-    return OutlineButton(
-      splashColor: Colors.grey,
-      onPressed: () {
-        signInWithGoogle(model);
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
-                ),
-              ),
-            )
-          ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .85,
+      height: MediaQuery.of(context).size.width * .14,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            color: Colors.black),
+        child: OutlineButton(
+          splashColor: Colors.white70,
+          onPressed: () {
+            signInWithGoogle(model);
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          highlightElevation: 0,
+          borderSide: BorderSide(color: Colors.black),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

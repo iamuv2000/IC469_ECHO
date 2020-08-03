@@ -103,22 +103,6 @@ class _MessageCardState extends State<MessageCard> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 10),
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    width: double.infinity,
-                    child: Text(
-                      "Message ${widget.message["name"]}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600
-                      ),
-                    ),
-                    color: _color,
-                  ),
-                ),
               ],
             ),
           ),

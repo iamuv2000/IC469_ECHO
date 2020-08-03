@@ -16,3 +16,7 @@ const url_getArticles="$baseUrl1/getArticles";
 const url_getBaseArticles="$baseUrl/getArticles";
 const url_sendDailyActivites="$baseUrl/user/activity/submit";
 const url_getDailyActivites="$baseUrl/user/activity/daily";
+const url_sendTherapistEmail="$baseUrl/user/guide/email";
+const url_recordDiary="$baseUrl/user/addDiary";
+const url_getDiaryEntries="$baseUrl/user/getDiary";
+const url_getAllArticles ="$baseUrl/user/suggestion/articles";

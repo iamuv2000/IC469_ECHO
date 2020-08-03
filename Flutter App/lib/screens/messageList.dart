@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:parallax/models/user.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:parallax/models/postModel.dart';
 import 'package:parallax/screens/chatList.dart';
@@ -6,10 +12,9 @@ import 'package:parallax/screens/dialogFlow.dart';
 import 'package:parallax/widgets/messageCard.dart';
 import 'package:parallax/scoped_models/mainModel.dart';
 import 'package:parallax/screens/homePage.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:parallax/scoped_models/shared.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+User loggedInUser;
 
 class MessageList extends StatefulWidget {
   @override
@@ -20,17 +25,20 @@ class _MessageListState extends State<MessageList> {
   var messages = null;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final postController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
+  bool loading = true;
 
   Future<http.Response> submitPost() {
     return http.post(
       'https://echo-cbt-server.herokuapp.com/user/create_story',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
+        'Authorization': 'Bearer ${loggedInUser.uid}'
       },
       body: jsonEncode(<String, String>{
         'story': postController.text,
-        'isAnonymous': "isChecked.toString()"
+        'isAnonymous': isChecked.toString()
       }),
     );
   }
@@ -39,8 +47,20 @@ class _MessageListState extends State<MessageList> {
     return http.get('https://echo-cbt-server.herokuapp.com/user/stories',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
+          'Authorization': 'Bearer ${loggedInUser.uid}'
         });
+  }
+
+  Future<void> getCurrentUser() async {
+    try {
+      final user = await Shared.getUserDetails();
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -50,6 +70,10 @@ class _MessageListState extends State<MessageList> {
   }
 
   void _initializePage() async {
+    setState(() {
+      loading = true;
+    });
+    await getCurrentUser();
     print("FETCHING ARTICLES!");
     var allPosts = await getAllPosts();
     final parsed = jsonDecode(allPosts.body);
@@ -57,6 +81,11 @@ class _MessageListState extends State<MessageList> {
 //    var a = await model.getAllPosts();
     setState(() {
       messages = parsed['payload']['stories'];
+    });
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        loading = false;
+      });
     });
   }
 
@@ -66,26 +95,6 @@ class _MessageListState extends State<MessageList> {
     updateState(() {
       isChecked = !isChecked;
     });
-  }
-
-  List<Widget> _buildAppBarActionButtons() {
-    return <Widget>[
-      Container(
-        child: IconButton(
-            icon: Icon(
-              Icons.bookmark,
-              size: 30,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ChatList(),
-                ),
-              );
-            }),
-      ),
-    ];
   }
 
   @override
@@ -102,25 +111,30 @@ class _MessageListState extends State<MessageList> {
                 color: Colors.black,
               ),
             ),
-            actions: _buildAppBarActionButtons(),
             backgroundColor: Colors.white,
-            leading: Container(),
           ),
-          body: messages == null
-              ? Container(
-                  child: Center(
+          body: 
+          loading
+              ? Center(
+                  child: Container(
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: messages.length,
-                  padding: EdgeInsets.all(0),
-                  itemBuilder: (context, index) {
-                    final item = messages[index];
-                    return Container(
-                      child: MessageCard(message: item),
-                    );
-                  }),
+              : messages == null
+                  ? Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: messages.length,
+                      padding: EdgeInsets.all(0),
+                      itemBuilder: (context, index) {
+                        final item = messages[index];
+                        return Container(
+                          child: MessageCard(message: item),
+                        );
+                      }),
           bottomNavigationBar: BottomAppBar(
             child: Container(
               margin: EdgeInsets.all(15),
