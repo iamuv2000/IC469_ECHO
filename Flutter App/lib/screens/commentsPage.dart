@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+FirebaseUser loggedInUser;
 
 class CommentsPage extends StatefulWidget {
   @override
@@ -12,13 +14,25 @@ class CommentsPage extends StatefulWidget {
 }
 
 class _CommentsPageState extends State<CommentsPage> {
-
+  final _auth = FirebaseAuth.instance;
+  void getCurrentUser () async {
+    try{
+      final user = await _auth.currentUser();
+      if(user!=null){
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    }
+    catch(e){
+      print(e);
+    }
+  }
   Future<http.Response> getAllPosts() {
     print(widget.postId);
     return http.get('https://echo-cbt-server.herokuapp.com/user/story/fetchComments?storyId=${widget.postId}',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
+          'Authorization': 'Bearer ${loggedInUser.uid}'
         });
   }
 
@@ -31,12 +45,12 @@ class _CommentsPageState extends State<CommentsPage> {
       'https://echo-cbt-server.herokuapp.com/user/story/comment',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer 6H7TDIZq3vOOK4q3z6ih7cGfkc43'
+        'Authorization': 'Bearer ${loggedInUser.uid}'
       },
       body: jsonEncode(<String, String>{
         'comment': _textController.text,
-        "name" : "Yuvraj Singh",
-        "uid" : "6H7TDIZq3vOOK4q3z6ih7cGfkc43",
+        "name" : loggedInUser.displayName.toString(),
+        "uid" : loggedInUser.uid.toString(),
         'storyId': widget.postId.toString()
       }),
     );
@@ -46,6 +60,7 @@ class _CommentsPageState extends State<CommentsPage> {
   void initState() {
     super.initState();
     _initializePage();
+    getCurrentUser();
   }
 
   void _initializePage() async {
