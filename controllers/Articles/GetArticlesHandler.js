@@ -158,6 +158,7 @@ const GetArticlesHandler = (activities) => {
       filteredActivities.forEach((keyword) => {
         filteredArticles = [...filteredArticles, ...articles[keyword]]
       })
+      filteredArticles = [...filteredArticles, ...articles.meditate]
       resolve({
         statusCode: 200,
         serverMessage: responses['200'],
