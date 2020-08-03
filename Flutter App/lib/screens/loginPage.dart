@@ -16,9 +16,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool loading = false;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print("Shared preferences initializing!");
     Shared.initialize();
@@ -28,9 +29,12 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<String> signInWithGoogle(MainModel model) async {
+    setState(() {
+      loading = true;
+    });
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
-    await googleSignInAccount.authentication;
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -76,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
             );
-          } catch(err) {
+          } catch (err) {
             Toast.show("Login Error!", context,
                 duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
           }
@@ -104,6 +108,9 @@ class _LoginPageState extends State<LoginPage> {
     // print(user.runtimeType);
     // print('User Email: '+user.email);
     // return 'signInWithGoogle succeeded: $user';
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -111,40 +118,46 @@ class _LoginPageState extends State<LoginPage> {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return Scaffold(
-          body: Container(
-            color: Colors.white,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundColor: Colors.black,
-                    child: Image(
-                        image: AssetImage(
-                          "images/support.png",
+          body: loading
+              ? Center(
+                  child: Container(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.black,
+                          child: Image(
+                              image: AssetImage(
+                                "images/support.png",
+                              ),
+                              height: 100,
+                              width: 100),
                         ),
-                        height: 100,
-                        width: 100
+                        SizedBox(height: 40),
+                        Text(
+                          'ECHO',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 54,
+                            fontWeight: FontWeight.w800,
+                            wordSpacing: 18,
+                            letterSpacing: 5.1,
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                        _signInButton(model),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 40),
-                  Text(
-                      'Hi there,',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 50,
-                        fontWeight: FontWeight.w800,
-                      )
-                  ),
-
-                  SizedBox(height: 80),
-                  _signInButton(model),
-                ],
-              ),
-            ),
-          ),
+                ),
         );
       },
     );
@@ -155,10 +168,11 @@ class _LoginPageState extends State<LoginPage> {
       width: MediaQuery.of(context).size.width * .85,
       height: MediaQuery.of(context).size.width * .14,
       child: DecoratedBox(
-        decoration: ShapeDecoration(shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ), color: Colors.black),
-
+        decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            color: Colors.black),
         child: OutlineButton(
           splashColor: Colors.white70,
           onPressed: () {
@@ -179,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'Hi, Echo',
+                    'Login',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,

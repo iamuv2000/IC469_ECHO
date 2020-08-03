@@ -19,7 +19,13 @@ class Shared {
   static Future<User> getUserDetails() async {
     if (pref != null) {
       // return jsonDecode(pref.getString('userDetails'));
-      return User.fromJson(jsonDecode(pref.getString('userDetails')));
+      var user = User.fromJson(jsonDecode(pref.getString('userDetails')));
+      return user;
+      //if(user == null) {
+      //  return User(uid:'a', name: 'dummy', email: 'a', mobile: '0');
+      //} else {
+      //  return user;
+      //}
     } else {
       print("Error getting user details");
       return null;

@@ -14,9 +14,7 @@ import 'package:parallax/scoped_models/mainModel.dart';
 import 'package:parallax/screens/homePage.dart';
 import 'package:parallax/scoped_models/shared.dart';
 
-
 User loggedInUser;
-
 
 class MessageList extends StatefulWidget {
   @override
@@ -28,6 +26,8 @@ class _MessageListState extends State<MessageList> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final postController = TextEditingController();
   final _auth = FirebaseAuth.instance;
+
+  bool loading = true;
 
   Future<http.Response> submitPost() {
     return http.post(
@@ -51,15 +51,14 @@ class _MessageListState extends State<MessageList> {
         });
   }
 
-  void getCurrentUser() async {
-    try{
+  Future<void> getCurrentUser() async {
+    try {
       final user = await Shared.getUserDetails();
-      if(user!=null){
+      if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
       }
-    }
-    catch(e){
+    } catch (e) {
       print(e);
     }
   }
@@ -68,10 +67,13 @@ class _MessageListState extends State<MessageList> {
   void initState() {
     super.initState();
     _initializePage();
-    getCurrentUser();
   }
 
   void _initializePage() async {
+    setState(() {
+      loading = true;
+    });
+    await getCurrentUser();
     print("FETCHING ARTICLES!");
     var allPosts = await getAllPosts();
     final parsed = jsonDecode(allPosts.body);
@@ -79,6 +81,11 @@ class _MessageListState extends State<MessageList> {
 //    var a = await model.getAllPosts();
     setState(() {
       messages = parsed['payload']['stories'];
+    });
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        loading = false;
+      });
     });
   }
 
@@ -106,21 +113,28 @@ class _MessageListState extends State<MessageList> {
             ),
             backgroundColor: Colors.white,
           ),
-          body: messages == null
-              ? Container(
-                  child: Center(
+          body: 
+          loading
+              ? Center(
+                  child: Container(
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: messages.length,
-                  padding: EdgeInsets.all(0),
-                  itemBuilder: (context, index) {
-                    final item = messages[index];
-                    return Container(
-                      child: MessageCard(message: item),
-                    );
-                  }),
+              : messages == null
+                  ? Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: messages.length,
+                      padding: EdgeInsets.all(0),
+                      itemBuilder: (context, index) {
+                        final item = messages[index];
+                        return Container(
+                          child: MessageCard(message: item),
+                        );
+                      }),
           bottomNavigationBar: BottomAppBar(
             child: Container(
               margin: EdgeInsets.all(15),

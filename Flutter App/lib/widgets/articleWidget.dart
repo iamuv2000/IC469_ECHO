@@ -98,7 +98,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                       // article["imageUrl"]!=null?article["imageUrl"]:'images/clumsy.png',
                       //article["image"],
                       imageUrls[r.nextInt(4)%4],
-                      // height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height * 0.33,
                       width: MediaQuery.of(context).size.width * 1.0,
                     ),
                   ],

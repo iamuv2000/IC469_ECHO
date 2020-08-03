@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:toast/toast.dart';
 
 import '../scoped_models/mainModel.dart';
+import '../scoped_models/shared.dart';
 import '../widgets/activityWidget.dart';
 import '../widgets/articleWidget.dart';
 import '../widgets/dateWidget.dart';
@@ -30,11 +31,12 @@ class _HomePageState extends State<HomePage> {
   //   });
   // }
 
-  bool showFab = true;
+  bool showFab = true, loading = true;
 
   double _height = 240.0;
 
   int pageNumber = 1, _moodIndex = -1;
+  String name = 'friend';
 
   List<String> activities = [], activityKeys = [];
   List<int> timeSpent = [];
@@ -49,6 +51,30 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       model = ScopedModel.of(context);
     });
+    _initializePage();
+  }
+
+  void _initializePage() async {
+    setState(() {
+      loading = true;
+    });
+    await getCurrentUser();
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<void> getCurrentUser() async {
+    try {
+      final user = await Shared.getUserDetails();
+      if (user != null) {
+        setState(() {
+          name = user.name;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   void setSuggActivites(dynamic a) {
@@ -577,7 +603,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           leading: Container(),
           title: Text(
-            "Hello, Gagan",
+            "Hello, " + name,
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           actions: <Widget>[
@@ -593,7 +619,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
                 child: CircleAvatar(
-                  backgroundColor: Colors.grey,
+                  backgroundColor: Colors.purple,
+                  child: Text('I'),
                 ),
               ),
             ),
@@ -602,7 +629,15 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
         ),
         // body: ListView(
-        body: SingleChildScrollView(
+        body: 
+          loading
+              ? Center(
+                  child: Container(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              :
+            SingleChildScrollView(
           padding: EdgeInsets.all(21),
           // children: <Widget>[
           child: Column(children: constructColumn()

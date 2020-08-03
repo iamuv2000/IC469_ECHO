@@ -16,8 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<MainModel>(
       model: _model,
-          child: MaterialApp(
-        title: 'Flutter Demo',
+        child: MaterialApp(
+        title: 'Echo',
+        color: Colors.black,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
