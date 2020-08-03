@@ -36,7 +36,7 @@ class _CommentsPageState extends State<CommentsPage> {
         });
   }
 
-  var comments =[];
+  var comments = null;
   TextEditingController _textController=TextEditingController();
 
 
@@ -99,8 +99,16 @@ class _CommentsPageState extends State<CommentsPage> {
 
       body: Column(
         children: <Widget>[
-          comments.length == 0
+          comments == null
               ?
+          Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+          :
+              comments.length == 0
+          ?
           Center(
             child: Text(
               "No comments to show!",
@@ -150,7 +158,12 @@ class _CommentsPageState extends State<CommentsPage> {
                     ),
                   );
                 }),
+
           ),
+          comments == null
+              ?
+          Container()
+          :
           Container(
             padding: EdgeInsets.all(10),
             child: TextField(
