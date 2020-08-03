@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import '../scoped_models/mainModel.dart';
+import '../scoped_models/shared.dart';
 
 class HomePageDialogflow extends StatefulWidget {
   HomePageDialogflow({Key key, this.title}) : super(key: key);
@@ -13,10 +17,65 @@ class HomePageDialogflow extends StatefulWidget {
 class _HomePageDialogflow extends State<HomePageDialogflow> {
   final List<ChatMessage> _messages = <ChatMessage>[];
   final TextEditingController _textController = new TextEditingController();
+  MainModel _model;
+  String name;
+
+  @override
+  void initState() {
+    _model = ScopedModel.of(context);
+    _initializePage(_model);
+    _logFirstMssg("Hello! Let\'s talk about how was your day?");
+    super.initState();
+  }
+
+  void _initializePage(MainModel _model) async {
+    var _user = await Shared.getUserDetails();
+    name = _user.name;
+    ChatMessage message;
+    try {
+      var entries = await _model.getDiaryEntries();
+      print(entries);
+      print(entries.length);
+      print(entries[0]);
+      for (int i = 0; i < entries.length; i++) {
+        message = ChatMessage(
+          text: entries[i]['entry'],
+          name: name,
+          type: true,
+        );
+        setState(() {
+          _messages.insert(0, message);
+        });
+      }
+    } catch (err) {
+      print(err);
+      message = ChatMessage(
+        text:
+            "An error occured, while getting previous entries, please try again later",
+        name: "EchoBot",
+        type: false,
+      );
+      setState(() {
+        _messages.insert(0, message);
+      });
+    }
+  }
+
+  void _logFirstMssg(String text) {
+    _textController.clear();
+    ChatMessage message = ChatMessage(
+      text: text,
+      name: "EchoBot",
+      type: false,
+    );
+    setState(() {
+      _messages.insert(0, message);
+    });
+  }
 
   Widget _buildTextComposer() {
-    return new IconTheme(
-      data: new IconThemeData(color: Theme.of(context).accentColor),
+    return IconTheme(
+      data: IconThemeData(color: Theme.of(context).accentColor),
       child: new Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(
@@ -47,8 +106,7 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
   void Response(query) async {
     _textController.clear();
     AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/credentials.json")
-            .build();
+        await AuthGoogle(fileJson: "assets/credentials.json").build();
     Dialogflow dialogflow =
         Dialogflow(authGoogle: authGoogle, language: Language.english);
     AIResponse response = await dialogflow.detectIntent(query);
@@ -63,17 +121,41 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
     });
   }
 
+  void _recordDiary(String text) async {
+    _textController.clear();
+    ChatMessage message;
+    try {
+      await _model.recordDiary(text);
+      message = ChatMessage(
+        text: "Thanks we hope you have a great day!",
+        name: "EchoBot",
+        type: false,
+      );
+    } catch (err) {
+      print(err);
+      message = ChatMessage(
+        text:
+            "An error occured, while recording your input, please try again later",
+        name: "EchoBot",
+        type: false,
+      );
+    }
+    setState(() {
+      _messages.insert(0, message);
+    });
+  }
+
   void _handleSubmitted(String text) {
     _textController.clear();
     ChatMessage message = new ChatMessage(
       text: text,
-      name: "Promise",
+      name: name,
       type: true,
     );
     setState(() {
       _messages.insert(0, message);
     });
-    Response(text);
+    _recordDiary(text);
   }
 
   @override
@@ -85,32 +167,31 @@ class _HomePageDialogflow extends State<HomePageDialogflow> {
         elevation: 0,
         backgroundColor: Colors.white,
         title: new Text(
-          "Anonymous Ant",
-          style: TextStyle(
-            color: Colors.black
-          ),
+          "Daily Logs",
+          style: TextStyle(color: Colors.black),
         ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
-          onPressed: (){
+          onPressed: () {
             Navigator.of(context).pop();
           },
         ),
       ),
-      body: new Column(children: <Widget>[
-        new Flexible(
-            child: new ListView.builder(
-          padding: new EdgeInsets.all(8.0),
-          reverse: true,
-          itemBuilder: (_, int index) => _messages[index],
-          itemCount: _messages.length,
-        )),
-        new Divider(height: 1.0),
-        new Container(
-          decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+      body: Column(children: <Widget>[
+        Flexible(
+          child: new ListView.builder(
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, int index) => _messages[index],
+            itemCount: _messages.length,
+          ),
+        ),
+        Divider(height: 1.0),
+        Container(
+          decoration: BoxDecoration(color: Theme.of(context).cardColor),
           child: _buildTextComposer(),
         ),
       ]),
@@ -128,8 +209,9 @@ class ChatMessage extends StatelessWidget {
   List<Widget> otherMessage(context) {
     return <Widget>[
       new Container(
+        //width: type ? MediaQuery.of(context).size.width * 0.05 : MediaQuery.of(context).size.width * 0.1,
         margin: const EdgeInsets.only(right: 16.0),
-        child: new CircleAvatar(child: new Text('B')),
+        child: new CircleAvatar(child: new Text('EB')),
       ),
       new Expanded(
         child: new Column(
@@ -137,9 +219,10 @@ class ChatMessage extends StatelessWidget {
           children: <Widget>[
             new Text(this.name,
                 style: new TextStyle(fontWeight: FontWeight.bold)),
-            new Container(
+            Container(
+              width: type ? MediaQuery.of(context).size.width * 0.0 : MediaQuery.of(context).size.width,
               margin: const EdgeInsets.only(top: 5.0),
-              child: new Text(text),
+              child: Text(text),
             ),
           ],
         ),
@@ -174,9 +257,9 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
-      child: new Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: this.type ? myMessage(context) : otherMessage(context),
       ),

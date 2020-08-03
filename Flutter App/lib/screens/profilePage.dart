@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage>
                 );
               },
               child: Icon(
-                Icons.settings,
+                Icons.add,
                 color: Colors.black,
               ),
             ),

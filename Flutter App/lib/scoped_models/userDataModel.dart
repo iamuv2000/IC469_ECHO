@@ -188,16 +188,91 @@ mixin ChipModel on Model {
         if (response.statusCode == 500 ||
             response.statusCode == 400 ||
             response.statusCode == 404) {
-          throw "Server Error!";
+          message = jsonDecode(response.body)["error"];
+          throw message;
         } else {
-          print("This wala error!");
-          message = jsonDecode(response.body)["message"];
+          message = jsonDecode(response.body)["error"];
           throw message;
         }
       }
     } catch (err) {
       print("Error sending therapist email!....$err");
-      return {"code": statuscode, "message": err};
+      throw message;
+    }
+  }
+
+  Future<dynamic> recordDiary(String text) async {
+    var statuscode;
+    var message;
+    var body;
+    body = jsonEncode({
+      "entry": text,
+    });
+    try {
+      print("Sending record dairy Request!");
+      var user = await Shared.getUserDetails();
+      http.Response response = await http.post(
+        url_recordDiary,
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + user.uid,
+        },
+        body: body,
+      );
+      print("Response for record diary:");
+      print(response.statusCode);
+      print(response.body);
+      statuscode = response.statusCode;
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["payload"]["isDiaryAdded"];
+      } else {
+        if (response.statusCode == 500 ||
+            response.statusCode == 400 ||
+            response.statusCode == 404) {
+          message = jsonDecode(response.body)["error"];
+          throw message;
+        } else {
+          message = jsonDecode(response.body)["error"];
+          throw message;
+        }
+      }
+    } catch (err) {
+      print("Error record diary!....$err");
+      throw message;
+    }
+  }
+
+  Future<dynamic> getDiaryEntries() async {
+    var message;
+    try {
+      print("Sending get diary records Request!");
+      var user = await Shared.getUserDetails();
+      http.Response response = await http.get(
+        url_getDiaryEntries,
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": "Bearer " + user.uid,
+        },
+      );
+      print("Response for diary records:");
+      print(response.statusCode);
+      print(response.body);
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body)["payload"]["diary"];
+      } else {
+        if (response.statusCode == 500 ||
+            response.statusCode == 400 ||
+            response.statusCode == 404) {
+          message = jsonDecode(response.body)["error"];
+          throw message;
+        } else {
+          message = jsonDecode(response.body)["error"];
+          throw message;
+        }
+      }
+    } catch (err) {
+      print("Error diary records!....$err");
+      throw message;
     }
   }
 }
