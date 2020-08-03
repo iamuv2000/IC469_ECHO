@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 const responses = require('../../configs/responses.js')
 
 const articles = {
@@ -150,20 +151,30 @@ const articles = {
 
 const GetArticlesHandler = (activities) => {
   return new Promise((resolve, reject) => {
-    const keys = Object.keys(articles)
-    const filteredActivities = activities.filter((keyword) => keys.includes(keyword))
-    var filteredArticles = []
-    filteredActivities.forEach((keyword) => {
-      filteredArticles = [...filteredArticles, ...articles[keyword]]
-    })
-    resolve({
-      statusCode: 200,
-      serverMessage: responses['200'],
-      payload: {
-        articles: filteredArticles
-      },
-      error: null
-    })
+    try {
+      const keys = Object.keys(articles)
+      const filteredActivities = activities.filter((keyword) => keys.includes(keyword))
+      var filteredArticles = []
+      filteredActivities.forEach((keyword) => {
+        filteredArticles = [...filteredArticles, ...articles[keyword]]
+      })
+      resolve({
+        statusCode: 200,
+        serverMessage: responses['200'],
+        payload: {
+          articles: filteredArticles
+        },
+        error: null
+      })
+    } catch (err) {
+      console.log(err.message)
+      reject({
+        statusCode: 500,
+        serverMessage: responses['500'],
+        payload: {},
+        error: 'Server Side Error'
+      })
+    }
   })
 }
 
