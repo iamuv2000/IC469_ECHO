@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<String> signInWithGoogle(MainModel model) async {
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleSignInAuthentication.accessToken,
@@ -77,8 +77,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
           } catch(err) {
-          Toast.show("Login Error!", context,
-              duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+            Toast.show("Login Error!", context,
+                duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
           }
         } else {
           Toast.show("Login Error!", context,
@@ -118,8 +118,28 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  FlutterLogo(size: 150),
-                  SizedBox(height: 50),
+                  CircleAvatar(
+                    radius: 80,
+                    backgroundColor: Colors.black,
+                    child: Image(
+                        image: AssetImage(
+                          "images/support.png",
+                        ),
+                        height: 100,
+                        width: 100
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  Text(
+                      'Hi there,',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 50,
+                        fontWeight: FontWeight.w800,
+                      )
+                  ),
+
+                  SizedBox(height: 80),
                   _signInButton(model),
                 ],
               ),
@@ -131,32 +151,44 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _signInButton(MainModel model) {
-    return OutlineButton(
-      splashColor: Colors.grey,
-      onPressed: () {
-        signInWithGoogle(model);
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
-                ),
-              ),
-            )
-          ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .85,
+      height: MediaQuery.of(context).size.width * .14,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ), color: Colors.black),
+
+        child: OutlineButton(
+          splashColor: Colors.white70,
+          onPressed: () {
+            signInWithGoogle(model);
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          highlightElevation: 0,
+          borderSide: BorderSide(color: Colors.black),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Hi, Echo',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

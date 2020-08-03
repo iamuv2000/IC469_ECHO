@@ -67,6 +67,7 @@ flutter:
    - images/bad_icon.png
    - images/meh_icon.png
    - images/awful_icon.png
+   - images/support.png
    - assets/credentials.json
    - images/
   #  - images/a_dot_ham.jpeg
